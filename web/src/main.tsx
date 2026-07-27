@@ -114,15 +114,21 @@ const rootElement = document.querySelector<HTMLElement>('#root')
 if (!rootElement) {
   throw new Error('Root element not found')
 }
-// Set the product title and favicon, then refresh the favicon from status.
+// Set the runtime product title and favicon, then refresh the favicon from status.
 ;(function initSystemBranding() {
   try {
     if (typeof window === 'undefined' || typeof document === 'undefined') return
-    document.title = BROWSER_TITLE
+    const runtimeConfig = (
+      window as Window & {
+        __RUNTIME_CONFIG__?: { browserTitle?: string }
+      }
+    ).__RUNTIME_CONFIG__
+    const browserTitle = runtimeConfig?.browserTitle || BROWSER_TITLE
+    document.title = browserTitle
     const metaTitle = document.querySelector(
       'meta[name="title"]'
     ) as HTMLMetaElement | null
-    if (metaTitle) metaTitle.setAttribute('content', BROWSER_TITLE)
+    if (metaTitle) metaTitle.setAttribute('content', browserTitle)
 
     // Cache-first
     try {
