@@ -4,10 +4,13 @@ import (
 	"bytes"
 	"context"
 	"embed"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"html"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
 	"strconv"
@@ -186,6 +189,10 @@ func main() {
 	middleware.SetUpLogger(server)
 	InjectUmamiAnalytics()
 	InjectGoogleAnalytics()
+	if err := InjectRuntimeBranding(); err != nil {
+		common.FatalLog("failed to configure public branding: " + err.Error())
+		return
+	}
 
 	// 设置路由
 	router.SetRouter(server, router.WebAssets{
@@ -272,6 +279,45 @@ func InjectGoogleAnalytics() {
 	analyticsInject := []byte(analyticsInjectBuilder.String())
 	placeholder := []byte("<!--Google Analytics-->\n")
 	indexPage = bytes.ReplaceAll(indexPage, placeholder, analyticsInject)
+}
+
+func InjectRuntimeBranding() error {
+	browserTitle := strings.TrimSpace(os.Getenv("BROWSER_TITLE"))
+	if browserTitle == "" {
+		browserTitle = "Best AI API in Russia"
+	}
+
+	publicURL := strings.TrimRight(strings.TrimSpace(os.Getenv("PUBLIC_URL")), "/")
+	if publicURL == "" {
+		publicURL = "https://russiaapi.com"
+	}
+	parsedPublicURL, err := url.Parse(publicURL)
+	if err != nil || parsedPublicURL.Scheme == "" || parsedPublicURL.Host == "" || parsedPublicURL.User != nil {
+		return fmt.Errorf("PUBLIC_URL must be an absolute URL without credentials")
+	}
+	if parsedPublicURL.Scheme != "http" && parsedPublicURL.Scheme != "https" {
+		return fmt.Errorf("PUBLIC_URL must use http or https")
+	}
+	if parsedPublicURL.Path != "" || parsedPublicURL.RawQuery != "" || parsedPublicURL.Fragment != "" {
+		return fmt.Errorf("PUBLIC_URL must contain only scheme and host")
+	}
+
+	runtimeConfig, err := json.Marshal(map[string]string{
+		"browserTitle": browserTitle,
+		"publicUrl":    publicURL,
+	})
+	if err != nil {
+		return fmt.Errorf("encode runtime config: %w", err)
+	}
+
+	indexPage = bytes.ReplaceAll(indexPage, []byte("__RUNTIME_PUBLIC_URL__"), []byte(html.EscapeString(publicURL)))
+	indexPage = bytes.ReplaceAll(indexPage, []byte("__RUNTIME_BROWSER_TITLE__"), []byte(html.EscapeString(browserTitle)))
+	indexPage = bytes.ReplaceAll(
+		indexPage,
+		[]byte("<!--runtime-config-->"),
+		[]byte("<script>window.__RUNTIME_CONFIG__="+string(runtimeConfig)+";</script>"),
+	)
+	return nil
 }
 
 func InitResources() error {
