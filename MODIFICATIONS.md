@@ -13,6 +13,7 @@ and remains licensed under GNU AGPL-3.0.
 - Refined the Russian homepage copy for a developer-facing API gateway.
 - Set the browser document title to `Best AI API in Russia` independently of
   the in-app product name.
+- Set `russiaapi.com` as the canonical public domain.
 - Added a GitHub Container Registry workflow for the fork's amd64 image.
 
 The original New API attribution and project link remain visible in the
