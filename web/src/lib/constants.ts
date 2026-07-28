@@ -20,10 +20,10 @@ For commercial licensing, please contact support@quantumnous.com
  * Application-wide constants
  */
 
-// Modified by AI Gateway RU on 2026-07-27.
+// Modified by RussiaAPI on 2026-07-29.
 
 // System Configuration Defaults
-export const DEFAULT_SYSTEM_NAME = 'AI Gateway RU'
+export const DEFAULT_SYSTEM_NAME = 'RussiaAPI'
 export const BROWSER_TITLE = 'Best AI API in Russia'
 export const DEFAULT_LOGO = '/logo.png'
 

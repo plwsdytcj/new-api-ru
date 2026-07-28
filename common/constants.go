@@ -1,6 +1,6 @@
 package common
 
-// Modified by AI Gateway RU on 2026-07-27.
+// Modified by RussiaAPI on 2026-07-29.
 
 import (
 	"crypto/tls"
@@ -14,7 +14,7 @@ import (
 
 var StartTime = time.Now().Unix() // unit: second
 var Version = "v0.0.0"            // this hard coding will be replaced automatically when building, no need to manually change
-var SystemName = "AI Gateway RU"
+var SystemName = "RussiaAPI"
 var Footer = ""
 var Logo = ""
 var TopUpLink = ""

@@ -6,82 +6,71 @@ it under the terms of the GNU Affero General Public License as
 published by the Free Software Foundation, either version 3 of the
 License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
-
 For commercial licensing, please contact support@quantumnous.com
 */
-import { Settings, Zap, BarChart3 } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { AnimateInView } from '@/components/animate-in-view'
 
 export function HowItWorks() {
   const { t } = useTranslation()
-
   const steps = [
     {
-      num: '1',
-      title: t('Configure'),
-      desc: t(
-        'Add your API keys, set up channels and configure access permissions'
-      ),
-      icon: <Settings className='size-6' strokeWidth={1.5} />,
+      number: '01',
+      title: t('Create a key'),
+      description: t('Set a balance, quota and model permissions.'),
     },
     {
-      num: '2',
-      title: t('Connect'),
-      desc: t(
-        'Connect through OpenAI, Claude, Gemini, and other compatible API routes'
-      ),
-      icon: <Zap className='size-6' strokeWidth={1.5} />,
+      number: '02',
+      title: t('Change the base URL'),
+      description: 'https://russiaapi.com/v1',
     },
     {
-      num: '3',
-      title: t('Monitor'),
-      desc: t('Track usage, costs and performance with real-time analytics'),
-      icon: <BarChart3 className='size-6' strokeWidth={1.5} />,
+      number: '03',
+      title: t('Send requests'),
+      description: t('Use the SDK or client you already have.'),
     },
   ]
 
   return (
-    <section className='border-border/40 relative z-10 border-t px-6 py-24 md:py-32'>
+    <section className='bg-[#111713] px-5 py-20 text-white sm:px-6 md:py-24'>
       <div className='mx-auto max-w-6xl'>
-        <AnimateInView className='mb-16 text-center md:mb-20'>
-          <p className='text-muted-foreground mb-3 text-xs font-medium tracking-widest uppercase'>
-            {t('How It Works')}
+        <AnimateInView className='flex flex-col justify-between gap-5 md:flex-row md:items-end'>
+          <div>
+            <p className='text-xs font-semibold text-emerald-400 uppercase'>
+              {t('Quick start')}
+            </p>
+            <h2 className='mt-4 max-w-xl text-3xl leading-tight font-semibold tracking-normal md:text-4xl'>
+              {t('Keep your client. Change one address.')}
+            </h2>
+          </div>
+          <p className='max-w-sm text-sm leading-6 text-white/55'>
+            {t(
+              'OpenAI-compatible clients can start without a custom integration.'
+            )}
           </p>
-          <h2 className='text-2xl font-bold tracking-tight md:text-3xl'>
-            {t('Three steps to get started')}
-          </h2>
         </AnimateInView>
 
-        <div className='grid gap-8 md:grid-cols-3 md:gap-12'>
-          {steps.map((step, i) => (
-            <AnimateInView
-              key={step.num}
-              delay={i * 150}
-              animation='fade-up'
-              className='relative flex flex-col items-center text-center'
-            >
-              <div className='relative mb-6'>
-                <div className='text-muted-foreground border-border/50 bg-muted/30 flex size-16 items-center justify-center rounded-2xl border transition-colors'>
-                  {step.icon}
-                </div>
-                <div className='bg-foreground text-background absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full text-xs font-bold'>
-                  {step.num}
-                </div>
-              </div>
-              <h3 className='mb-2 text-base font-semibold'>{step.title}</h3>
-              <p className='text-muted-foreground max-w-[240px] text-sm leading-relaxed'>
-                {step.desc}
-              </p>
-            </AnimateInView>
+        <div className='mt-12 grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center'>
+          {steps.map((step, index) => (
+            <div key={step.number} className='contents'>
+              <AnimateInView
+                delay={index * 90}
+                className='border border-white/15 p-5'
+              >
+                <span className='font-mono text-xs text-white/40'>
+                  {step.number}
+                </span>
+                <h3 className='mt-7 text-base font-semibold'>{step.title}</h3>
+                <p className='mt-2 font-mono text-xs leading-5 break-all text-white/55'>
+                  {step.description}
+                </p>
+              </AnimateInView>
+              {index < steps.length - 1 && (
+                <ArrowRight className='mx-2 hidden size-4 text-white/30 md:block' />
+              )}
+            </div>
           ))}
         </div>
       </div>
