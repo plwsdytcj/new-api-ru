@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/QuantumNous/new-api/setting/operation_setting"
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -62,6 +63,34 @@ func TestDePayResponseSignatureRoundTrip(t *testing.T) {
 	require.NoError(t, err)
 	require.NoError(t, verifyDePaySignature(body, signature, publicPath))
 	assert.Error(t, verifyDePaySignature([]byte(`{"amount":"1"}`), signature, publicPath))
+}
+
+func TestDePayTopUpRequiresComplianceAndCompleteConfig(t *testing.T) {
+	privatePath, publicPath := writeDePayTestKeys(t)
+	t.Setenv("DEPAY_INTEGRATION_ID", "integration-123")
+	t.Setenv("DEPAY_RECEIVER_ADDRESS", "0xReceiver")
+	t.Setenv("DEPAY_BLOCKCHAIN", "ethereum")
+	t.Setenv("DEPAY_TOKEN_ADDRESS", "0xToken")
+	t.Setenv("DEPAY_DYNAMIC_PRIVATE_KEY_FILE", privatePath)
+	t.Setenv("DEPAY_CALLBACK_PUBLIC_KEY_FILE", publicPath)
+
+	paymentSetting := operation_setting.GetPaymentSetting()
+	originalConfirmed := paymentSetting.ComplianceConfirmed
+	originalTermsVersion := paymentSetting.ComplianceTermsVersion
+	t.Cleanup(func() {
+		paymentSetting.ComplianceConfirmed = originalConfirmed
+		paymentSetting.ComplianceTermsVersion = originalTermsVersion
+	})
+	paymentSetting.ComplianceConfirmed = false
+	paymentSetting.ComplianceTermsVersion = ""
+
+	require.False(t, isDePayTopUpEnabled())
+
+	confirmPaymentComplianceForTest(t)
+	require.True(t, isDePayTopUpEnabled())
+
+	t.Setenv("DEPAY_TOKEN_ADDRESS", "")
+	require.False(t, isDePayTopUpEnabled())
 }
 
 func TestVerifyDePaySignatureAcceptsStandardBase64(t *testing.T) {

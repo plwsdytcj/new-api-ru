@@ -5272,6 +5272,7 @@
     "Refunds": "Refunds",
     "Billing": "Billing",
     "Receipts": "Receipts",
-    "Company details": "Company details"
+    "Company details": "Company details",
+    "Online topup is disabled until the administrator confirms compliance terms.": "Online topup is disabled until the administrator confirms compliance terms."
   }
 }

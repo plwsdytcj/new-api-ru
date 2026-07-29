@@ -5284,6 +5284,7 @@
     "Refunds": "Возвраты",
     "Billing": "Тарификация",
     "Receipts": "Чеки",
-    "Company details": "Реквизиты"
+    "Company details": "Реквизиты",
+    "Online topup is disabled until the administrator confirms compliance terms.": "Онлайн-пополнение отключено, пока администратор не подтвердит условия соответствия."
   }
 }

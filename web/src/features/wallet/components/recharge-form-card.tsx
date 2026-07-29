@@ -133,6 +133,7 @@ export function RechargeFormCard({
   const hasConfigurableTopup =
     topupInfo?.enable_online_topup ||
     topupInfo?.enable_stripe_topup ||
+    topupInfo?.enable_depay_topup ||
     enableWaffoTopup ||
     enableWaffoPancakeTopup
   const hasAnyTopup = hasConfigurableTopup || enableCreemTopup
@@ -480,9 +481,13 @@ export function RechargeFormCard({
       ) : (
         <Alert>
           <AlertDescription>
-            {t(
-              'Online topup is not enabled. Please use redemption code or contact administrator.'
-            )}
+            {topupInfo?.payment_compliance_confirmed === false
+              ? t(
+                  'Online topup is disabled until the administrator confirms compliance terms.'
+                )
+              : t(
+                  'Online topup is not enabled. Please use redemption code or contact administrator.'
+                )}
           </AlertDescription>
         </Alert>
       )}

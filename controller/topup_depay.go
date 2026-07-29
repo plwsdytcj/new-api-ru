@@ -76,6 +76,10 @@ func getDePayConfig() dePayConfig {
 }
 
 func isDePayTopUpEnabled() bool {
+	if !isPaymentComplianceConfirmed() {
+		return false
+	}
+
 	cfg := getDePayConfig()
 	if cfg.IntegrationID == "" || cfg.Receiver == "" || cfg.Blockchain == "" || cfg.TokenAddress == "" {
 		return false

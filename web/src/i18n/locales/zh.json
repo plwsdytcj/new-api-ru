@@ -5282,6 +5282,7 @@
     "Refunds": "退款规则",
     "Billing": "计费规则",
     "Receipts": "收据说明",
-    "Company details": "公司信息"
+    "Company details": "公司信息",
+    "Online topup is disabled until the administrator confirms compliance terms.": "管理员确认合规条款之前，在线充值功能不可用。"
   }
 }
