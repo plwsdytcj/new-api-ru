@@ -119,9 +119,10 @@ func TestValidateDePayCallback(t *testing.T) {
 	require.NoError(t, err)
 
 	cfg := dePayConfig{
-		Receiver:     "0xReceiver",
-		Blockchain:   "ethereum",
-		TokenAddress: "0xToken",
+		Receiver:        "0xReceiver",
+		Blockchain:      "ethereum",
+		TokenAddress:    "0xToken",
+		PlatformFeeRate: decimal.NewFromFloat(1.5),
 	}
 	expectedAmount := decimal.NewFromInt(10)
 	callback := dePayCallbackPayload{
@@ -132,6 +133,9 @@ func TestValidateDePayCallback(t *testing.T) {
 		Amount:      amount,
 		Commitment:  "confirmed",
 	}
+	require.NoError(t, validateDePayCallback(callback, cfg, expectedAmount))
+
+	callback.Amount = json.RawMessage(`"9.85"`)
 	require.NoError(t, validateDePayCallback(callback, cfg, expectedAmount))
 
 	callback.Amount = json.RawMessage(`"9.99"`)

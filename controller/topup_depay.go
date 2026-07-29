@@ -34,6 +34,7 @@ type dePayConfig struct {
 	TokenAddress      string
 	AmountUSDT        decimal.Decimal
 	CreditUSD         int64
+	PlatformFeeRate   decimal.Decimal
 	DynamicPrivateKey string
 	CallbackPublicKey string
 }
@@ -63,6 +64,10 @@ func getDePayConfig() dePayConfig {
 	if err != nil || credit <= 0 {
 		credit = 10
 	}
+	platformFeeRate, err := decimal.NewFromString(strings.TrimSpace(os.Getenv("DEPAY_PLATFORM_FEE_PERCENT")))
+	if err != nil || platformFeeRate.IsNegative() || platformFeeRate.GreaterThanOrEqual(decimal.NewFromInt(100)) {
+		platformFeeRate = decimal.NewFromFloat(1.5)
+	}
 	return dePayConfig{
 		IntegrationID:     strings.TrimSpace(os.Getenv("DEPAY_INTEGRATION_ID")),
 		Receiver:          strings.TrimSpace(os.Getenv("DEPAY_RECEIVER_ADDRESS")),
@@ -70,6 +75,7 @@ func getDePayConfig() dePayConfig {
 		TokenAddress:      strings.TrimSpace(os.Getenv("DEPAY_TOKEN_ADDRESS")),
 		AmountUSDT:        amount,
 		CreditUSD:         credit,
+		PlatformFeeRate:   platformFeeRate,
 		DynamicPrivateKey: strings.TrimSpace(os.Getenv("DEPAY_DYNAMIC_PRIVATE_KEY_FILE")),
 		CallbackPublicKey: strings.TrimSpace(os.Getenv("DEPAY_CALLBACK_PUBLIC_KEY_FILE")),
 	}
@@ -277,7 +283,13 @@ func validateDePayCallback(callback dePayCallbackPayload, cfg dePayConfig, expec
 		return errors.New("token mismatch")
 	}
 	amount, err := parseDePayAmount(callback.Amount)
-	if err != nil || !amount.Equal(expectedAmount) {
+	if err != nil {
+		return errors.New("amount mismatch")
+	}
+	expectedNetAmount := expectedAmount.Mul(
+		decimal.NewFromInt(100).Sub(cfg.PlatformFeeRate),
+	).Div(decimal.NewFromInt(100))
+	if !amount.Equal(expectedAmount) && !amount.Equal(expectedNetAmount) {
 		return errors.New("amount mismatch")
 	}
 	commitment := strings.ToLower(strings.TrimSpace(callback.Commitment))
