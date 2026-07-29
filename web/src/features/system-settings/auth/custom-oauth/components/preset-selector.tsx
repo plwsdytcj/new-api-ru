@@ -42,6 +42,10 @@ export function PresetSelector(props: PresetSelectorProps) {
   const { t } = useTranslation()
   const [selectedPreset, setSelectedPreset] = useState<string>('')
   const [baseUrl, setBaseUrl] = useState<string>('')
+  const selectedPresetConfig = OAUTH_PRESETS.find(
+    (preset) => preset.key === selectedPreset
+  )
+  const needsBaseUrl = selectedPresetConfig?.needsBaseUrl ?? false
 
   const handlePresetChange = (presetKey: string) => {
     setSelectedPreset(presetKey)
@@ -72,8 +76,9 @@ export function PresetSelector(props: PresetSelectorProps) {
       shouldDirty: true,
     })
 
-    // Apply base URL if already entered
-    if (baseUrl) {
+    if (!preset.needsBaseUrl) {
+      applyEndpoints(preset, '')
+    } else if (baseUrl) {
       applyEndpoints(preset, baseUrl)
     }
   }
@@ -92,6 +97,21 @@ export function PresetSelector(props: PresetSelectorProps) {
     preset: (typeof OAUTH_PRESETS)[number],
     url: string
   ) => {
+    if (!preset.needsBaseUrl) {
+      props.form.setValue(
+        'authorization_endpoint',
+        preset.authorization_endpoint,
+        { shouldDirty: true }
+      )
+      props.form.setValue('token_endpoint', preset.token_endpoint, {
+        shouldDirty: true,
+      })
+      props.form.setValue('user_info_endpoint', preset.user_info_endpoint, {
+        shouldDirty: true,
+      })
+      return
+    }
+
     const cleanUrl = url.replace(/\/+$/, '')
     props.form.setValue(
       'authorization_endpoint',
@@ -139,8 +159,13 @@ export function PresetSelector(props: PresetSelectorProps) {
         <div className='space-y-1.5'>
           <Label>{t('Base URL')}</Label>
           <Input
-            placeholder={t('https://your-server.example.com')}
+            placeholder={
+              needsBaseUrl
+                ? t('https://your-server.example.com')
+                : t('Not required for this preset')
+            }
             value={baseUrl}
+            disabled={!needsBaseUrl}
             onChange={(e) => handleBaseUrlChange(e.target.value)}
           />
         </div>

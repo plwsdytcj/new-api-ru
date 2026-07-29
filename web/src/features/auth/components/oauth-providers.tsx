@@ -16,6 +16,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { Google, Yandex } from '@lobehub/icons'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -48,6 +49,19 @@ type ProviderButton = {
   onClick: () => void
   icon?: ReactNode
   disabled?: boolean
+}
+
+function getCustomProviderIcon(icon: string, slug: string) {
+  const providerIcon = icon.trim().toLowerCase()
+  const providerSlug = slug.trim().toLowerCase()
+
+  if (providerIcon === 'google' || providerSlug === 'google') {
+    return <Google.Color className='size-4' />
+  }
+  if (providerIcon === 'yandex' || providerSlug === 'yandex') {
+    return <Yandex className='size-4 text-[#fc3f1d]' />
+  }
+  return undefined
 }
 
 export function OAuthProviders({
@@ -107,10 +121,14 @@ export function OAuthProviders({
   }
 
   if (status?.oidc_enabled) {
+    const isGoogleOIDC = status.oidc_authorization_endpoint?.includes(
+      'accounts.google.com'
+    )
     providerButtons.push({
       key: 'oidc',
-      label: t('Continue with OIDC'),
+      label: isGoogleOIDC ? t('Continue with Google') : t('Continue with OIDC'),
       onClick: handleOIDCLogin,
+      icon: isGoogleOIDC ? <Google.Color className='size-4' /> : undefined,
     })
   }
 
@@ -140,6 +158,7 @@ export function OAuthProviders({
         key: `custom-${provider.slug}`,
         label: t('Continue with {{name}}', { name: provider.name }),
         onClick: () => handleCustomOAuthLogin(provider),
+        icon: getCustomProviderIcon(provider.icon, provider.slug),
       })
     }
   }

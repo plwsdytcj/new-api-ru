@@ -208,7 +208,7 @@ func (p *GenericOAuthProvider) GetUserInfo(ctx context.Context, token *OAuthToke
 	}
 
 	// Set authorization header
-	tokenType := normalizeAuthorizationTokenType(token.TokenType)
+	tokenType := p.authorizationTokenType(token.TokenType)
 	req.Header.Set("Authorization", fmt.Sprintf("%s %s", tokenType, token.AccessToken))
 	req.Header.Set("Accept", "application/json")
 
@@ -323,6 +323,16 @@ func normalizeAuthorizationTokenType(tokenType string) string {
 		return "Bearer"
 	}
 	return tokenType
+}
+
+func (p *GenericOAuthProvider) authorizationTokenType(tokenType string) string {
+	icon := strings.TrimSpace(p.config.Icon)
+	endpoint := strings.ToLower(strings.TrimSpace(p.config.UserInfoEndpoint))
+	if strings.EqualFold(icon, "yandex") ||
+		strings.Contains(endpoint, "login.yandex.") {
+		return "OAuth"
+	}
+	return normalizeAuthorizationTokenType(tokenType)
 }
 
 // IsGenericProvider returns true for generic providers
