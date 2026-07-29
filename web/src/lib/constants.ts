@@ -25,7 +25,7 @@ For commercial licensing, please contact support@quantumnous.com
 // System Configuration Defaults
 export const DEFAULT_SYSTEM_NAME = 'RussiaAPI'
 export const BROWSER_TITLE = 'Best AI API in Russia'
-export const DEFAULT_LOGO = '/logo.png'
+export const DEFAULT_LOGO = '/russiaapi-logo.png'
 
 // LocalStorage Keys
 export const STORAGE_KEYS = {
