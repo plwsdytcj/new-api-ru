@@ -184,6 +184,10 @@ export function getMinTopupAmount(topupInfo: TopupInfo | null): number {
     return topupInfo.waffo_pancake_min_topup || DEFAULT_MIN_TOPUP
   }
 
+  if (topupInfo.enable_depay_topup) {
+    return topupInfo.depay_credit || DEFAULT_MIN_TOPUP
+  }
+
   return DEFAULT_MIN_TOPUP
 }
 

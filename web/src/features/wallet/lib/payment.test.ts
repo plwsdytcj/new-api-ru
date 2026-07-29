@@ -22,10 +22,12 @@ import { describe, test } from 'node:test'
 import { PAYMENT_TYPES } from '../constants'
 import {
   dispatchSelectedPayment,
+  getMinTopupAmount,
   isStripePayment,
   isWaffoPayment,
   isWaffoPancakePayment,
 } from './payment'
+import type { TopupInfo } from '../types'
 
 describe('payment type classification', () => {
   test('keeps Waffo and Waffo Pancake on their dedicated flows', () => {
@@ -84,5 +86,20 @@ describe('payment dispatch', () => {
 
     assert.equal(success, false)
     assert.equal(called, false)
+  })
+})
+
+describe('minimum topup amount', () => {
+  test('uses the fixed DePay credit amount when DePay is the only provider', () => {
+    const topupInfo = {
+      enable_online_topup: false,
+      enable_stripe_topup: false,
+      enable_waffo_topup: false,
+      enable_waffo_pancake_topup: false,
+      enable_depay_topup: true,
+      depay_credit: 10,
+    } as TopupInfo
+
+    assert.equal(getMinTopupAmount(topupInfo), 10)
   })
 })
