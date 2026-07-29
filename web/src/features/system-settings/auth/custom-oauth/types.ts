@@ -124,7 +124,7 @@ export const OAUTH_PRESETS: OAuthPreset[] = [
     authorization_endpoint: 'https://oauth.yandex.com/authorize',
     token_endpoint: 'https://oauth.yandex.com/token',
     user_info_endpoint: 'https://login.yandex.ru/info?format=json',
-    scopes: 'login:info,login:email',
+    scopes: 'login:info login:email',
     user_id_field: 'id',
     username_field: 'login',
     display_name_field: 'display_name',
