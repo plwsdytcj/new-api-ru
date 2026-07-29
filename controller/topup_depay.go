@@ -151,16 +151,16 @@ func DePayDynamicConfig(c *gin.Context) {
 		return
 	}
 	topUp := model.GetTopUpByTradeNo(tradeNo)
-	if topUp == nil || topUp.PaymentProvider != model.PaymentProviderDePay || topUp.Status != common.TopUpStatusPending ||
-		topUp.Amount != cfg.CreditUSD || !decimal.NewFromFloat(topUp.Money).Equal(cfg.AmountUSDT) {
+	if topUp == nil || topUp.PaymentProvider != model.PaymentProviderDePay || topUp.Status != common.TopUpStatusPending {
 		c.JSON(http.StatusNotFound, gin.H{"error": "payment order not found"})
 		return
 	}
+	orderAmount := decimal.NewFromFloat(topUp.Money)
 
 	response := gin.H{
 		"accept": []gin.H{{
 			"blockchain": cfg.Blockchain,
-			"amount":     cfg.AmountUSDT.String(),
+			"amount":     orderAmount.String(),
 			"token":      cfg.TokenAddress,
 			"receiver":   cfg.Receiver,
 		}},
@@ -206,16 +206,23 @@ func DePayCallback(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid order reference"})
 		return
 	}
-	if err := validateDePayCallback(callback, cfg); err != nil {
-		logger.LogWarn(c.Request.Context(), fmt.Sprintf("DePay callback rejected trade_no=%s reason=%q", tradeNo, err.Error()))
-		c.JSON(http.StatusBadRequest, gin.H{"error": "payment details do not match"})
-		return
-	}
 
 	topUp := model.GetTopUpByTradeNo(tradeNo)
-	if topUp == nil || topUp.PaymentProvider != model.PaymentProviderDePay ||
-		topUp.Amount != cfg.CreditUSD || !decimal.NewFromFloat(topUp.Money).Equal(cfg.AmountUSDT) {
+	if topUp == nil || topUp.PaymentProvider != model.PaymentProviderDePay {
 		c.JSON(http.StatusNotFound, gin.H{"error": "payment order not found"})
+		return
+	}
+	orderAmount := decimal.NewFromFloat(topUp.Money)
+	if err := validateDePayCallback(callback, cfg, orderAmount); err != nil {
+		logger.LogWarn(c.Request.Context(), fmt.Sprintf(
+			"DePay callback rejected trade_no=%s reason=%q callback_amount=%s order_amount=%s transaction=%s",
+			tradeNo,
+			err.Error(),
+			strings.TrimSpace(string(callback.Amount)),
+			orderAmount.String(),
+			callback.Transaction,
+		))
+		c.JSON(http.StatusBadRequest, gin.H{"error": "payment details do not match"})
 		return
 	}
 	if err := model.RechargeDePay(tradeNo, callback.Transaction, c.ClientIP()); err != nil {
@@ -256,7 +263,7 @@ func readDePayBody(c *gin.Context) ([]byte, error) {
 	return body, nil
 }
 
-func validateDePayCallback(callback dePayCallbackPayload, cfg dePayConfig) error {
+func validateDePayCallback(callback dePayCallbackPayload, cfg dePayConfig, expectedAmount decimal.Decimal) error {
 	if callback.Transaction == "" {
 		return errors.New("missing transaction")
 	}
@@ -270,7 +277,7 @@ func validateDePayCallback(callback dePayCallbackPayload, cfg dePayConfig) error
 		return errors.New("token mismatch")
 	}
 	amount, err := parseDePayAmount(callback.Amount)
-	if err != nil || !amount.Equal(cfg.AmountUSDT) {
+	if err != nil || !amount.Equal(expectedAmount) {
 		return errors.New("amount mismatch")
 	}
 	commitment := strings.ToLower(strings.TrimSpace(callback.Commitment))

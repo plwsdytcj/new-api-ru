@@ -122,8 +122,8 @@ func TestValidateDePayCallback(t *testing.T) {
 		Receiver:     "0xReceiver",
 		Blockchain:   "ethereum",
 		TokenAddress: "0xToken",
-		AmountUSDT:   decimal.NewFromInt(10),
 	}
+	expectedAmount := decimal.NewFromInt(10)
 	callback := dePayCallbackPayload{
 		Blockchain:  "ethereum",
 		Transaction: "0xTransaction",
@@ -132,10 +132,10 @@ func TestValidateDePayCallback(t *testing.T) {
 		Amount:      amount,
 		Commitment:  "confirmed",
 	}
-	require.NoError(t, validateDePayCallback(callback, cfg))
+	require.NoError(t, validateDePayCallback(callback, cfg, expectedAmount))
 
 	callback.Amount = json.RawMessage(`"9.99"`)
-	assert.Error(t, validateDePayCallback(callback, cfg))
+	assert.Error(t, validateDePayCallback(callback, cfg, expectedAmount))
 }
 
 func TestEqualDePayIdentifierPreservesNonEVMCase(t *testing.T) {
