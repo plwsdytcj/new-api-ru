@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 286 64" role="img" aria-labelledby="title">
+  <title id="title">RussiaAPI</title>
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="#fff"/>
+  <path
+    d="M20 47V17h14c8.3 0 13 4.4 13 11.6 0 6.2-4.1 10.3-11 11.2L47.5 49"
+    fill="none"
+    stroke="#14233d"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="48.5" cy="49.5" r="6" fill="#e5484d"/>
+  <text
+    x="78"
+    y="43"
+    fill="#fff"
+    font-family="Inter, Arial, sans-serif"
+    font-size="32"
+    font-weight="700"
+    letter-spacing="0"
+  >RussiaAPI</text>
+</svg>
