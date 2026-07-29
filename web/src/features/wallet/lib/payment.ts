@@ -93,10 +93,15 @@ export function isWaffoPancakePayment(paymentType: string): boolean {
   return paymentType === PAYMENT_TYPES.WAFFO_PANCAKE
 }
 
+export function isDePayPayment(paymentType: string): boolean {
+  return paymentType === PAYMENT_TYPES.DEPAY
+}
+
 export interface PaymentProcessors {
   regular: (topupAmount: number, paymentType: string) => Promise<boolean>
   waffo: (topupAmount: number, payMethodIndex: number) => Promise<boolean>
   waffoPancake: (topupAmount: number) => Promise<boolean>
+  depay: (topupAmount: number) => Promise<boolean>
 }
 
 export async function dispatchSelectedPayment(
@@ -114,6 +119,10 @@ export async function dispatchSelectedPayment(
 
   if (isWaffoPancakePayment(paymentMethod.type)) {
     return processors.waffoPancake(topupAmount)
+  }
+
+  if (isDePayPayment(paymentMethod.type)) {
+    return processors.depay(topupAmount)
   }
 
   return processors.regular(topupAmount, paymentMethod.type)
@@ -142,6 +151,10 @@ export function getDefaultPaymentType(topupInfo: TopupInfo | null): string {
 
   if (topupInfo.enable_waffo_pancake_topup) {
     return PAYMENT_TYPES.WAFFO_PANCAKE
+  }
+
+  if (topupInfo.enable_depay_topup) {
+    return PAYMENT_TYPES.DEPAY
   }
 
   return DEFAULT_PAYMENT_TYPE

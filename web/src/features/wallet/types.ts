@@ -59,6 +59,12 @@ export type WaffoPancakePaymentResponse = ApiResponse<
     }
   | string
 >
+export type DePayPaymentResponse = ApiResponse<{
+  integration_id: string
+  order_id: string
+  amount: string
+  credit: number
+}>
 
 /**
  * Creem product configuration
@@ -150,6 +156,12 @@ export interface TopupInfo {
   enable_waffo_pancake_topup?: boolean
   /** Minimum topup amount for Waffo Pancake */
   waffo_pancake_min_topup?: number
+  /** Whether DePay USDT topup is enabled */
+  enable_depay_topup?: boolean
+  /** Fixed USDT amount charged by DePay */
+  depay_amount?: string
+  /** Fixed credit amount granted after payment */
+  depay_credit?: number
   /** Whether redemption code usage is enabled */
   enable_redemption?: boolean
   /** Whether compliance confirmation has been completed */
@@ -201,6 +213,11 @@ export interface WaffoPaymentRequest {
  */
 export interface WaffoPancakePaymentRequest {
   /** Topup amount */
+  amount: number
+}
+
+export interface DePayPaymentRequest {
+  /** Fixed credit amount selected for this DePay order */
   amount: number
 }
 

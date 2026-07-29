@@ -154,6 +154,13 @@ export function getPaymentIcon(
           />
         </span>
       )
+    case PAYMENT_TYPES.DEPAY:
+      return (
+        <CreditCard
+          className={className}
+          style={{ color: PAYMENT_ICON_COLORS[PAYMENT_TYPES.DEPAY] }}
+        />
+      )
     default:
       return <CreditCard className={className} />
   }

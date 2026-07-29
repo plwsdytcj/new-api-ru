@@ -12,16 +12,17 @@ import (
 )
 
 type TopUp struct {
-	Id              int     `json:"id"`
-	UserId          int     `json:"user_id" gorm:"index"`
-	Amount          int64   `json:"amount"`
-	Money           float64 `json:"money"`
-	TradeNo         string  `json:"trade_no" gorm:"unique;type:varchar(255);index"`
-	PaymentMethod   string  `json:"payment_method" gorm:"type:varchar(50)"`
-	PaymentProvider string  `json:"payment_provider" gorm:"type:varchar(50);default:''"`
-	CreateTime      int64   `json:"create_time"`
-	CompleteTime    int64   `json:"complete_time"`
-	Status          string  `json:"status"`
+	Id                  int     `json:"id"`
+	UserId              int     `json:"user_id" gorm:"index"`
+	Amount              int64   `json:"amount"`
+	Money               float64 `json:"money"`
+	TradeNo             string  `json:"trade_no" gorm:"unique;type:varchar(255);index"`
+	PaymentMethod       string  `json:"payment_method" gorm:"type:varchar(50)"`
+	PaymentProvider     string  `json:"payment_provider" gorm:"type:varchar(50);default:''"`
+	ProviderTransaction *string `json:"provider_transaction,omitempty" gorm:"type:varchar(255);uniqueIndex"`
+	CreateTime          int64   `json:"create_time"`
+	CompleteTime        int64   `json:"complete_time"`
+	Status              string  `json:"status"`
 }
 
 const (
@@ -29,6 +30,7 @@ const (
 	PaymentMethodCreem        = "creem"
 	PaymentMethodWaffo        = "waffo"
 	PaymentMethodWaffoPancake = "waffo_pancake"
+	PaymentMethodDePay        = "depay"
 	PaymentMethodBalance      = "balance"
 )
 
@@ -38,6 +40,7 @@ const (
 	PaymentProviderCreem        = "creem"
 	PaymentProviderWaffo        = "waffo"
 	PaymentProviderWaffoPancake = "waffo_pancake"
+	PaymentProviderDePay        = "depay"
 	PaymentProviderBalance      = "balance"
 )
 
@@ -585,5 +588,76 @@ func RechargeWaffoPancake(tradeNo string) (err error) {
 		RecordLog(topUp.UserId, LogTypeTopup, fmt.Sprintf("Waffo Pancake充值成功，充值额度: %v，支付金额: %.2f", logger.FormatQuota(quotaToAdd), topUp.Money))
 	}
 
+	return nil
+}
+
+func RechargeDePay(tradeNo string, providerTransaction string, callerIp string) error {
+	if tradeNo == "" || providerTransaction == "" {
+		return errors.New("missing DePay transaction reference")
+	}
+
+	var quotaToAdd int
+	var completed bool
+	topUp := &TopUp{}
+
+	refCol := "`trade_no`"
+	if common.UsingMainDatabase(common.DatabaseTypePostgreSQL) {
+		refCol = `"trade_no"`
+	}
+
+	err := DB.Transaction(func(tx *gorm.DB) error {
+		if err := lockForUpdate(tx).Where(refCol+" = ?", tradeNo).First(topUp).Error; err != nil {
+			return ErrTopUpNotFound
+		}
+		if topUp.PaymentProvider != PaymentProviderDePay {
+			return ErrPaymentMethodMismatch
+		}
+
+		if topUp.Status == common.TopUpStatusSuccess {
+			if topUp.ProviderTransaction != nil && *topUp.ProviderTransaction == providerTransaction {
+				return nil
+			}
+			return ErrTopUpStatusInvalid
+		}
+		if topUp.Status != common.TopUpStatusPending {
+			return ErrTopUpStatusInvalid
+		}
+
+		quotaToAdd = int(decimal.NewFromInt(topUp.Amount).
+			Mul(decimal.NewFromFloat(common.QuotaPerUnit)).
+			IntPart())
+		if quotaToAdd <= 0 {
+			return errors.New("invalid DePay credit amount")
+		}
+
+		topUp.ProviderTransaction = &providerTransaction
+		topUp.CompleteTime = common.GetTimestamp()
+		topUp.Status = common.TopUpStatusSuccess
+		if err := tx.Save(topUp).Error; err != nil {
+			return err
+		}
+
+		if err := tx.Model(&User{}).
+			Where("id = ?", topUp.UserId).
+			Update("quota", gorm.Expr("quota + ?", quotaToAdd)).Error; err != nil {
+			return err
+		}
+
+		completed = true
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+
+	if completed {
+		RecordTopupLog(
+			topUp.UserId,
+			fmt.Sprintf("DePay充值成功，充值额度: %v，支付金额: %.2f USDT", logger.FormatQuota(quotaToAdd), topUp.Money),
+			callerIp,
+			topUp.PaymentMethod,
+			PaymentMethodDePay,
+		)
+	}
 	return nil
 }

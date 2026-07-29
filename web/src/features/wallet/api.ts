@@ -39,6 +39,8 @@ import type {
   WaffoPaymentResponse,
   WaffoPancakePaymentRequest,
   WaffoPancakePaymentResponse,
+  DePayPaymentRequest,
+  DePayPaymentResponse,
 } from './types'
 
 // ============================================================================
@@ -176,6 +178,18 @@ export async function requestWaffoPancakePayment(
   request: WaffoPancakePaymentRequest
 ): Promise<WaffoPancakePaymentResponse> {
   const res = await api.post('/api/user/waffo-pancake/pay', request, {
+    skipBusinessError: true,
+  } as Record<string, unknown>)
+  return res.data
+}
+
+/**
+ * Create a fixed-amount DePay USDT order.
+ */
+export async function requestDePayPayment(
+  request: DePayPaymentRequest
+): Promise<DePayPaymentResponse> {
+  const res = await api.post('/api/user/depay/pay', request, {
     skipBusinessError: true,
   } as Record<string, unknown>)
   return res.data

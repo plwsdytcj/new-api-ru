@@ -95,12 +95,32 @@ func GetTopUpInfo(c *gin.Context) {
 		}
 	}
 
+	enableDePay := isDePayTopUpEnabled()
+	if enableDePay {
+		hasDePay := false
+		for _, method := range payMethods {
+			if method["type"] == model.PaymentMethodDePay {
+				hasDePay = true
+				break
+			}
+		}
+		if !hasDePay {
+			payMethods = append(payMethods, map[string]string{
+				"name":      "USDT (DePay)",
+				"type":      model.PaymentMethodDePay,
+				"color":     "#EC2C7D",
+				"min_topup": strconv.FormatInt(getDePayConfig().CreditUSD, 10),
+			})
+		}
+	}
+
 	data := gin.H{
 		"enable_online_topup":              isEpayTopUpEnabled(),
 		"enable_stripe_topup":              isStripeTopUpEnabled(),
 		"enable_creem_topup":               isCreemTopUpEnabled(),
 		"enable_waffo_topup":               enableWaffo,
 		"enable_waffo_pancake_topup":       enableWaffoPancake,
+		"enable_depay_topup":                enableDePay,
 		"enable_redemption":                complianceConfirmed,
 		"payment_compliance_confirmed":     complianceConfirmed,
 		"payment_compliance_terms_version": operation_setting.CurrentComplianceTermsVersion,
@@ -116,6 +136,8 @@ func GetTopUpInfo(c *gin.Context) {
 		"stripe_min_topup":        setting.StripeMinTopUp,
 		"waffo_min_topup":         setting.WaffoMinTopUp,
 		"waffo_pancake_min_topup": setting.WaffoPancakeMinTopUp,
+		"depay_amount":            getDePayConfig().AmountUSDT.String(),
+		"depay_credit":            getDePayConfig().CreditUSD,
 		"amount_options":          operation_setting.GetPaymentSetting().AmountOptions,
 		"discount":                operation_setting.GetPaymentSetting().AmountDiscount,
 		"topup_link":              common.TopUpLink,

@@ -41,6 +41,7 @@ import {
   useCreemPayment,
   useWaffoPayment,
   useWaffoPancakePayment,
+  useDePayPayment,
 } from './hooks'
 import {
   getDefaultPaymentType,
@@ -108,6 +109,7 @@ export function Wallet(props: WalletProps) {
   const { processing: waffoProcessing, processWaffoPayment } = useWaffoPayment()
   const { processing: pancakeProcessing, processWaffoPancakePayment } =
     useWaffoPancakePayment()
+  const { processing: depayProcessing, processDePayPayment } = useDePayPayment()
 
   // Fetch and refresh user data
   const fetchUser = useCallback(async () => {
@@ -176,14 +178,23 @@ export function Wallet(props: WalletProps) {
     setPaymentLoading(method.type)
 
     try {
+      const requestedAmount =
+        method.type === PAYMENT_TYPES.DEPAY
+          ? topupInfo?.depay_credit || 10
+          : topupAmount
+      if (method.type === PAYMENT_TYPES.DEPAY) {
+        setTopupAmount(requestedAmount)
+        setSelectedPreset(requestedAmount)
+      }
+
       // Validate minimum topup
       const minTopup = getMinTopupAmount(topupInfo)
-      if (topupAmount < minTopup) {
+      if (requestedAmount < minTopup) {
         return
       }
 
       // Calculate payment amount and show confirmation dialog
-      await calculatePaymentAmount(topupAmount, method.type)
+      await calculatePaymentAmount(requestedAmount, method.type)
       setConfirmDialogOpen(true)
     } finally {
       setPaymentLoading(null)
@@ -202,6 +213,7 @@ export function Wallet(props: WalletProps) {
         regular: processPayment,
         waffo: processWaffoPayment,
         waffoPancake: processWaffoPancakePayment,
+        depay: processDePayPayment,
       }
     )
 
@@ -360,7 +372,9 @@ export function Wallet(props: WalletProps) {
         paymentAmount={paymentAmount}
         paymentMethod={selectedPaymentMethod}
         calculating={calculating}
-        processing={processing || waffoProcessing || pancakeProcessing}
+        processing={
+          processing || waffoProcessing || pancakeProcessing || depayProcessing
+        }
         discountRate={getDiscountRate()}
         usdExchangeRate={effectiveUsdExchangeRate}
       />
