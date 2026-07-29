@@ -36,6 +36,10 @@ type LegalDocumentProps = {
   emptyMessage: string
 }
 
+function stripLeadingMarkdownHeading(content: string) {
+  return content.replace(/^#\s+.+(?:\r?\n)+/, '')
+}
+
 export function LegalDocument({
   title,
   queryKey,
@@ -134,7 +138,7 @@ export function LegalDocument({
 
           <RichContent
             mode='markdown'
-            content={rawContent}
+            content={stripLeadingMarkdownHeading(rawContent)}
             className='prose-neutral dark:prose-invert max-w-none'
           />
         </div>
