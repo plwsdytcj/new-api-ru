@@ -23,6 +23,12 @@ import { PAYMENT_TYPES } from '../constants'
 import { requestPaymentAmount } from './use-payment'
 
 describe('payment amount routing', () => {
+  test('uses the selected fixed DePay package amount', async () => {
+    const amount = await requestPaymentAmount(1, PAYMENT_TYPES.DEPAY)
+
+    assert.equal(amount, 1)
+  })
+
   test('uses the dedicated Waffo amount calculator', async () => {
     const calls: string[] = []
     const amount = await requestPaymentAmount(120, PAYMENT_TYPES.WAFFO, {

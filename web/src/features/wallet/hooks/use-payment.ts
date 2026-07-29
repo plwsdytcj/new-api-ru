@@ -64,7 +64,7 @@ export async function requestPaymentAmount(
   calculators: PaymentAmountCalculators = defaultPaymentAmountCalculators
 ): Promise<number> {
   if (isDePayPayment(paymentType)) {
-    return 10
+    return topupAmount
   }
 
   let calculator = calculators.regular
