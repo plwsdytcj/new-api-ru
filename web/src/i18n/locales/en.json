@@ -5268,6 +5268,10 @@
     "Usage recorded automatically": "Usage recorded automatically",
     "Use the SDK or client you already have.": "Use the SDK or client you already have.",
     "Users choose a model. RussiaAPI evaluates the available channels, sends the request and records the actual usage behind the same API surface.": "Users choose a model. RussiaAPI evaluates the available channels, sends the request and records the actual usage behind the same API surface.",
-    "Issue scoped keys, quotas and groups without exposing upstream credentials to users.": "Issue scoped keys, quotas and groups without exposing upstream credentials to users."
+    "Issue scoped keys, quotas and groups without exposing upstream credentials to users.": "Issue scoped keys, quotas and groups without exposing upstream credentials to users.",
+    "Refunds": "Refunds",
+    "Billing": "Billing",
+    "Receipts": "Receipts",
+    "Company details": "Company details"
   }
 }

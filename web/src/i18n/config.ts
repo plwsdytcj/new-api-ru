@@ -51,7 +51,16 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'ru',
+    fallbackLng: {
+      ru: ['ru'],
+      en: ['en'],
+      zhCN: ['en'],
+      zhTW: ['en'],
+      fr: ['en'],
+      ja: ['en'],
+      vi: ['en'],
+      default: ['ru'],
+    },
     supportedLngs: ['en', 'zhCN', 'fr', 'ru', 'ja', 'vi', 'zhTW'],
     load: 'currentOnly',
     nsSeparator: false, // Allow literal colons in keys (e.g., URLs, labels)

@@ -5280,6 +5280,10 @@
     "Typical request": "Типичный запрос",
     "4K input + 1K output": "4 тыс. входных + 1 тыс. выходных",
     "per 1M tokens": "за 1 млн токенов",
-    "Typical request is an estimate based on 4K input tokens and 1K output tokens. Final charges follow actual usage.": "Стоимость типичного запроса рассчитана для 4 тыс. входных и 1 тыс. выходных токенов. Итоговое списание зависит от фактического использования."
+    "Typical request is an estimate based on 4K input tokens and 1K output tokens. Final charges follow actual usage.": "Стоимость типичного запроса рассчитана для 4 тыс. входных и 1 тыс. выходных токенов. Итоговое списание зависит от фактического использования.",
+    "Refunds": "Возвраты",
+    "Billing": "Тарификация",
+    "Receipts": "Чеки",
+    "Company details": "Реквизиты"
   }
 }

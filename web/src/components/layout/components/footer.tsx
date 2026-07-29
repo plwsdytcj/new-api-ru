@@ -100,28 +100,28 @@ function LegalLinks(props: { leadingSeparator?: boolean }) {
   if (status?.refund_policy_enabled) {
     items.push({
       key: 'refund-policy',
-      label: 'Возвраты',
+      label: t('Refunds'),
       href: '/refund-policy',
     })
   }
   if (status?.billing_policy_enabled) {
     items.push({
       key: 'billing-policy',
-      label: 'Тарификация',
+      label: t('Billing'),
       href: '/billing-policy',
     })
   }
   if (status?.receipt_policy_enabled) {
     items.push({
       key: 'receipt-policy',
-      label: 'Чеки',
+      label: t('Receipts'),
       href: '/receipt-policy',
     })
   }
   if (status?.company_details_enabled) {
     items.push({
       key: 'company-details',
-      label: 'Реквизиты',
+      label: t('Company details'),
       href: '/company-details',
     })
   }
