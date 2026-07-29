@@ -29,3 +29,23 @@ export async function getPrivacyPolicy() {
   const res = await api.get<LegalDocumentResponse>('/api/privacy-policy')
   return res.data
 }
+
+export async function getRefundPolicy() {
+  const res = await api.get<LegalDocumentResponse>('/api/refund-policy')
+  return res.data
+}
+
+export async function getBillingPolicy() {
+  const res = await api.get<LegalDocumentResponse>('/api/billing-policy')
+  return res.data
+}
+
+export async function getCompanyDetails() {
+  const res = await api.get<LegalDocumentResponse>('/api/company-details')
+  return res.data
+}
+
+export async function getReceiptPolicy() {
+  const res = await api.get<LegalDocumentResponse>('/api/receipt-policy')
+  return res.data
+}

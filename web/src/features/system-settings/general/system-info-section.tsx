@@ -55,6 +55,10 @@ const _systemInfoSchema = z.object({
   legal: z.object({
     user_agreement: z.string().optional(),
     privacy_policy: z.string().optional(),
+    refund_policy: z.string().optional(),
+    billing_policy: z.string().optional(),
+    company_details: z.string().optional(),
+    receipt_policy: z.string().optional(),
   }),
 })
 
@@ -83,6 +87,10 @@ export function SystemInfoSection({ defaultValues }: SystemInfoSectionProps) {
     legal: {
       user_agreement: normalizeValue(defaultValues.legal?.user_agreement),
       privacy_policy: normalizeValue(defaultValues.legal?.privacy_policy),
+      refund_policy: normalizeValue(defaultValues.legal?.refund_policy),
+      billing_policy: normalizeValue(defaultValues.legal?.billing_policy),
+      company_details: normalizeValue(defaultValues.legal?.company_details),
+      receipt_policy: normalizeValue(defaultValues.legal?.receipt_policy),
     },
   }
 
@@ -98,6 +106,10 @@ export function SystemInfoSection({ defaultValues }: SystemInfoSectionProps) {
     legal: z.object({
       user_agreement: z.string().optional(),
       privacy_policy: z.string().optional(),
+      refund_policy: z.string().optional(),
+      billing_policy: z.string().optional(),
+      company_details: z.string().optional(),
+      receipt_policy: z.string().optional(),
     }),
   })
 
@@ -316,6 +328,41 @@ export function SystemInfoSection({ defaultValues }: SystemInfoSectionProps) {
                   </FormItem>
                 )}
               />
+
+              {[
+                ['legal.refund_policy', 'Правила возврата'],
+                ['legal.billing_policy', 'Правила тарификации'],
+                ['legal.company_details', 'Реквизиты компании'],
+                ['legal.receipt_policy', 'Кассовые чеки'],
+              ].map(([name, label]) => (
+                <FormField
+                  key={name}
+                  control={form.control}
+                  name={
+                    name as
+                      | 'legal.refund_policy'
+                      | 'legal.billing_policy'
+                      | 'legal.company_details'
+                      | 'legal.receipt_policy'
+                  }
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{label}</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder='Markdown, HTML или внешняя ссылка'
+                          rows={6}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Публичный документ для российского сайта.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
             </SettingsFormGrid>
           </SettingsForm>
         </Form>

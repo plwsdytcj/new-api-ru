@@ -97,6 +97,34 @@ function LegalLinks(props: { leadingSeparator?: boolean }) {
       href: '/privacy-policy',
     })
   }
+  if (status?.refund_policy_enabled) {
+    items.push({
+      key: 'refund-policy',
+      label: 'Возвраты',
+      href: '/refund-policy',
+    })
+  }
+  if (status?.billing_policy_enabled) {
+    items.push({
+      key: 'billing-policy',
+      label: 'Тарификация',
+      href: '/billing-policy',
+    })
+  }
+  if (status?.receipt_policy_enabled) {
+    items.push({
+      key: 'receipt-policy',
+      label: 'Чеки',
+      href: '/receipt-policy',
+    })
+  }
+  if (status?.company_details_enabled) {
+    items.push({
+      key: 'company-details',
+      label: 'Реквизиты',
+      href: '/company-details',
+    })
+  }
   if (items.length === 0) {
     return null
   }

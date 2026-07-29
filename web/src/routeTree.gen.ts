@@ -12,7 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as BillingPolicyRouteImport } from './routes/billing-policy'
+import { Route as CompanyDetailsRouteImport } from './routes/company-details'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as ReceiptPolicyRouteImport } from './routes/receipt-policy'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as UserAgreementRouteImport } from './routes/user-agreement'
 import { Route as authForgotPasswordRouteImport } from './routes/(auth)/forgot-password'
 import { Route as authOauthRouteImport } from './routes/(auth)/oauth'
@@ -81,9 +85,29 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BillingPolicyRoute = BillingPolicyRouteImport.update({
+  id: '/billing-policy',
+  path: '/billing-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompanyDetailsRoute = CompanyDetailsRouteImport.update({
+  id: '/company-details',
+  path: '/company-details',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   id: '/privacy-policy',
   path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceiptPolicyRoute = ReceiptPolicyRouteImport.update({
+  id: '/receipt-policy',
+  path: '/receipt-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UserAgreementRoute = UserAgreementRouteImport.update({
@@ -389,7 +413,11 @@ const AuthenticatedSystemSettingsSiteSectionRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/billing-policy': typeof BillingPolicyRoute
+  '/company-details': typeof CompanyDetailsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/receipt-policy': typeof ReceiptPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/user-agreement': typeof UserAgreementRoute
   '/system-settings': typeof AuthenticatedSystemSettingsRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
@@ -447,7 +475,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/billing-policy': typeof BillingPolicyRoute
+  '/company-details': typeof CompanyDetailsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/receipt-policy': typeof ReceiptPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/user-agreement': typeof UserAgreementRoute
   '/forgot-password': typeof authForgotPasswordRoute
   '/oauth': typeof authOauthRoute
@@ -507,7 +539,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/billing-policy': typeof BillingPolicyRoute
+  '/company-details': typeof CompanyDetailsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/receipt-policy': typeof ReceiptPolicyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/user-agreement': typeof UserAgreementRoute
   '/_authenticated/system-settings': typeof AuthenticatedSystemSettingsRouteRouteWithChildren
   '/(auth)/forgot-password': typeof authForgotPasswordRoute
@@ -567,7 +603,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/billing-policy'
+    | '/company-details'
     | '/privacy-policy'
+    | '/receipt-policy'
+    | '/refund-policy'
     | '/user-agreement'
     | '/system-settings'
     | '/forgot-password'
@@ -625,7 +665,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/billing-policy'
+    | '/company-details'
     | '/privacy-policy'
+    | '/receipt-policy'
+    | '/refund-policy'
     | '/user-agreement'
     | '/forgot-password'
     | '/oauth'
@@ -684,7 +728,11 @@ export interface FileRouteTypes {
     | '/'
     | '/(auth)'
     | '/_authenticated'
+    | '/billing-policy'
+    | '/company-details'
     | '/privacy-policy'
+    | '/receipt-policy'
+    | '/refund-policy'
     | '/user-agreement'
     | '/_authenticated/system-settings'
     | '/(auth)/forgot-password'
@@ -745,7 +793,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  BillingPolicyRoute: typeof BillingPolicyRoute
+  CompanyDetailsRoute: typeof CompanyDetailsRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ReceiptPolicyRoute: typeof ReceiptPolicyRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   UserAgreementRoute: typeof UserAgreementRoute
   errors401Route: typeof errors401Route
   errors403Route: typeof errors403Route
@@ -783,11 +835,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/billing-policy': {
+      id: '/billing-policy'
+      path: '/billing-policy'
+      fullPath: '/billing-policy'
+      preLoaderRoute: typeof BillingPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/company-details': {
+      id: '/company-details'
+      path: '/company-details'
+      fullPath: '/company-details'
+      preLoaderRoute: typeof CompanyDetailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy-policy': {
       id: '/privacy-policy'
       path: '/privacy-policy'
       fullPath: '/privacy-policy'
       preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receipt-policy': {
+      id: '/receipt-policy'
+      path: '/receipt-policy'
+      fullPath: '/receipt-policy'
+      preLoaderRoute: typeof ReceiptPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/user-agreement': {
@@ -1307,7 +1387,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  BillingPolicyRoute: BillingPolicyRoute,
+  CompanyDetailsRoute: CompanyDetailsRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ReceiptPolicyRoute: ReceiptPolicyRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   UserAgreementRoute: UserAgreementRoute,
   errors401Route: errors401Route,
   errors403Route: errors403Route,
