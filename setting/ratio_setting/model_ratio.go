@@ -96,10 +96,13 @@ var defaultModelRatio = map[string]float64{
 	"gpt-5-mini-2025-08-07":                     0.125,
 	"gpt-5-nano":                                0.025,
 	"gpt-5-nano-2025-08-07":                     0.025,
-	"gpt-5.5":                                   2.5, // $5 / 1M tokens
-	"gpt-5.6-sol":                               2.5,
-	"gpt-5.6-terra":                             1.25,
-	"gpt-5.6-luna":                              0.5,
+	"gpt-5.4":                                   0.13,
+	"gpt-5.4-mini":                              0.09,
+	"gpt-5.5":                                   0.175,
+	"gpt-5.5-openai-compact":                    0.175,
+	"gpt-5.6-sol":                               0.26,
+	"gpt-5.6-terra":                             0.13,
+	"gpt-5.6-luna":                              0.09,
 	"gpt-3.5-turbo":                             0.25,
 	"gpt-3.5-turbo-0613":                        0.75,
 	"gpt-3.5-turbo-16k":                         1.5, // $0.003 / 1K tokens
@@ -301,6 +304,8 @@ var defaultModelPrice = map[string]float64{
 	"veo-3.0-fast-generate-001":      0.15,
 	"veo-3.1-generate-preview":       0.4,
 	"veo-3.1-fast-generate-preview":  0.15,
+	"gpt-image-2":                    0.11,
+	"gpt-image-2-firefly":            0.14,
 }
 
 var defaultAudioRatio = map[string]float64{
@@ -326,10 +331,15 @@ var modelRatioMap = types.NewRWMap[string, float64]()
 var completionRatioMap = types.NewRWMap[string, float64]()
 
 var defaultCompletionRatio = map[string]float64{
-	"gpt-4-gizmo-*":  2,
-	"gpt-4o-gizmo-*": 3,
-	"gpt-4-all":      2,
-	"gpt-image-1":    8,
+	"gpt-4-gizmo-*":          2,
+	"gpt-4o-gizmo-*":         3,
+	"gpt-4-all":              2,
+	"gpt-image-1":            8,
+	"gpt-5.5":                8,
+	"gpt-5.5-openai-compact": 8,
+	"gpt-5.6-luna":           8,
+	"gpt-5.6-sol":            8,
+	"gpt-5.6-terra":          8,
 }
 
 // InitRatioSettings initializes all model related settings maps

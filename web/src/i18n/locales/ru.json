@@ -5268,6 +5268,18 @@
     "Usage recorded automatically": "Использование учтено автоматически",
     "Use the SDK or client you already have.": "Используйте привычный SDK или клиент.",
     "Users choose a model. RussiaAPI evaluates the available channels, sends the request and records the actual usage behind the same API surface.": "Пользователь выбирает модель. RussiaAPI проверяет доступные каналы, отправляет запрос и учитывает фактическое использование за единым API.",
-    "Issue scoped keys, quotas and groups without exposing upstream credentials to users.": "Выдавайте отдельные ключи, квоты и группы, не раскрывая пользователям данные доступа к провайдерам."
+    "Issue scoped keys, quotas and groups without exposing upstream credentials to users.": "Выдавайте отдельные ключи, квоты и группы, не раскрывая пользователям данные доступа к провайдерам.",
+    "Transparent API pricing": "Прозрачные тарифы API",
+    "One public price per model. Routing and provider failover never change the price of your request.": "Единая публичная цена для каждой модели. Маршрутизация и переключение между провайдерами не меняют стоимость запроса.",
+    "Pay only for actual usage": "Оплата только за фактическое использование",
+    "Token usage is measured separately for input and output.": "Входные и выходные токены учитываются отдельно.",
+    "1 Credit equals 1 USDT": "1 кредит равен 1 USDT",
+    "Your balance and API charges use the same unit.": "Баланс и списания API учитываются в одной единице.",
+    "Stable public pricing": "Стабильные публичные цены",
+    "Automatic failover does not add a surcharge.": "Автоматическое переключение не увеличивает стоимость.",
+    "Typical request": "Типичный запрос",
+    "4K input + 1K output": "4 тыс. входных + 1 тыс. выходных",
+    "per 1M tokens": "за 1 млн токенов",
+    "Typical request is an estimate based on 4K input tokens and 1K output tokens. Final charges follow actual usage.": "Стоимость типичного запроса рассчитана для 4 тыс. входных и 1 тыс. выходных токенов. Итоговое списание зависит от фактического использования."
   }
 }
