@@ -162,6 +162,10 @@ export interface TopupInfo {
   depay_amount?: string
   /** Fixed credit amount granted after payment */
   depay_credit?: number
+  /** Cumulative successful top-up required for the first referral reward */
+  referral_topup_threshold_usd?: number
+  /** Referral reward stored in internal quota units */
+  referral_reward_quota?: number
   /** Whether redemption code usage is enabled */
   enable_redemption?: boolean
   /** Whether compliance confirmation has been completed */

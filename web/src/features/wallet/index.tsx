@@ -358,6 +358,8 @@ export function Wallet(props: WalletProps) {
               complianceConfirmed={
                 topupInfo?.payment_compliance_confirmed !== false
               }
+              rewardQuota={topupInfo?.referral_reward_quota}
+              topUpThresholdUSD={topupInfo?.referral_topup_threshold_usd}
               loading={affiliateLoading}
             />
           </div>

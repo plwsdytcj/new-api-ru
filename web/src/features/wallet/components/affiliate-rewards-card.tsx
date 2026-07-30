@@ -34,6 +34,8 @@ interface AffiliateRewardsCardProps {
   affiliateLink: string
   onTransfer: () => void
   complianceConfirmed?: boolean
+  rewardQuota?: number
+  topUpThresholdUSD?: number
   loading?: boolean
 }
 
@@ -42,6 +44,8 @@ export function AffiliateRewardsCard({
   affiliateLink,
   onTransfer,
   complianceConfirmed = true,
+  rewardQuota = 0,
+  topUpThresholdUSD = 0,
   loading,
 }: AffiliateRewardsCardProps) {
   const { t } = useTranslation()
@@ -74,9 +78,17 @@ export function AffiliateRewardsCard({
               {t('Referral Program')}
             </h3>
             <p className='text-muted-foreground line-clamp-1 text-xs'>
-              {t(
-                'Earn rewards when users join through your referral link. Transfer accumulated rewards to your balance anytime.'
-              )}
+              {rewardQuota > 0 && topUpThresholdUSD > 0
+                ? t(
+                    'Earn {{reward}} when an invited user first reaches {{threshold}} in successful top-ups.',
+                    {
+                      reward: formatQuota(rewardQuota),
+                      threshold: `$${topUpThresholdUSD}`,
+                    }
+                  )
+                : t(
+                    'Earn rewards when users join through your referral link. Transfer accumulated rewards to your balance anytime.'
+                  )}
             </p>
           </div>
         </div>

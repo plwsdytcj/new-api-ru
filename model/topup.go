@@ -598,6 +598,7 @@ func RechargeDePay(tradeNo string, providerTransaction string, callerIp string) 
 
 	var quotaToAdd int
 	var completed bool
+	var affiliateReward *AffiliateReward
 	topUp := &TopUp{}
 
 	refCol := "`trade_no`"
@@ -643,6 +644,12 @@ func RechargeDePay(tradeNo string, providerTransaction string, callerIp string) 
 			return err
 		}
 
+		var err error
+		affiliateReward, err = grantFirstTopUpAffiliateReward(tx, topUp)
+		if err != nil {
+			return err
+		}
+
 		completed = true
 		return nil
 	})
@@ -658,6 +665,16 @@ func RechargeDePay(tradeNo string, providerTransaction string, callerIp string) 
 			topUp.PaymentMethod,
 			PaymentMethodDePay,
 		)
+		if affiliateReward != nil {
+			RecordLog(
+				affiliateReward.InviterId,
+				LogTypeSystem,
+				fmt.Sprintf(
+					"Реферальное вознаграждение за первое пополнение: %s",
+					logger.LogQuota(affiliateReward.Quota),
+				),
+			)
+		}
 	}
 	return nil
 }
