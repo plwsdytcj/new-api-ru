@@ -46,6 +46,8 @@ import { routeTree } from './routeTree.gen'
 // Styles
 import './styles/index.css'
 
+const DEFAULT_FAVICON = '/russiaapi-favicon.ico'
+
 // Ensure VChart theme is initialized before any chart mounts (prevents white default theme flash)
 // VChart theme is driven by our ThemeProvider (html.light/html.dark) via per-chart `theme` prop.
 initializeFrontendCache()
@@ -132,17 +134,8 @@ if (!rootElement) {
       if (metaTitle) metaTitle.setAttribute('content', browserTitle)
     }
 
-    // Cache-first
-    try {
-      const saved = localStorage.getItem('status')
-      if (saved) {
-        const s = JSON.parse(saved)
-        if (s?.logo) applyFaviconToDom(s.logo)
-      }
-    } catch {
-      /* empty */
-    }
-    // Background refresh
+    // Avoid restoring a stale logo from the cached status response.
+    applyFaviconToDom(DEFAULT_FAVICON)
     getStatus()
       .then((s) => {
         try {
@@ -150,7 +143,7 @@ if (!rootElement) {
         } catch {
           /* empty */
         }
-        if (s?.logo) applyFaviconToDom(s.logo as string)
+        applyFaviconToDom((s?.logo as string) || DEFAULT_FAVICON)
       })
       .catch(() => {
         /* empty */
