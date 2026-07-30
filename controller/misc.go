@@ -321,10 +321,10 @@ func SendEmailVerification(c *gin.Context) {
 	}
 	code := common.GenerateVerificationCode(6)
 	common.RegisterVerificationCodeWithKey(email, code, common.EmailVerificationPurpose)
-	subject := fmt.Sprintf("%s邮箱验证邮件", common.SystemName)
-	content := fmt.Sprintf("<p>您好，你正在进行%s邮箱验证。</p>"+
-		"<p>您的验证码为: <strong>%s</strong></p>"+
-		"<p>验证码 %d 分钟内有效，如果不是本人操作，请忽略。</p>", common.SystemName, code, common.VerificationValidMinutes)
+	subject := fmt.Sprintf("%s: подтверждение электронной почты", common.SystemName)
+	content := fmt.Sprintf("<p>Подтвердите адрес электронной почты для аккаунта %s.</p>"+
+		"<p>Код подтверждения: <strong>%s</strong></p>"+
+		"<p>Код действителен в течение %d минут. Если вы не запрашивали его, просто проигнорируйте это письмо.</p>", common.SystemName, code, common.VerificationValidMinutes)
 	err := common.SendEmail(subject, email, content)
 	if err != nil {
 		common.ApiError(c, err)
@@ -347,11 +347,11 @@ func SendPasswordResetEmail(c *gin.Context) {
 		code := common.GenerateVerificationCode(0)
 		common.RegisterVerificationCodeWithKey(email, code, common.PasswordResetPurpose)
 		link := fmt.Sprintf("%s/user/reset?email=%s&token=%s", system_setting.ServerAddress, email, code)
-		subject := fmt.Sprintf("%s密码重置", common.SystemName)
-		content := fmt.Sprintf("<p>您好，你正在进行%s密码重置。</p>"+
-			"<p>点击 <a href='%s'>此处</a> 进行密码重置。</p>"+
-			"<p>如果链接无法点击，请尝试点击下面的链接或将其复制到浏览器中打开：<br> %s </p>"+
-			"<p>重置链接 %d 分钟内有效，如果不是本人操作，请忽略。</p>", common.SystemName, link, link, common.VerificationValidMinutes)
+		subject := fmt.Sprintf("%s: сброс пароля", common.SystemName)
+		content := fmt.Sprintf("<p>Вы запросили сброс пароля для аккаунта %s.</p>"+
+			"<p><a href='%s'>Нажмите здесь, чтобы сбросить пароль.</a></p>"+
+			"<p>Если ссылка не открывается, скопируйте её в адресную строку браузера:<br>%s</p>"+
+			"<p>Ссылка действительна в течение %d минут. Если вы не запрашивали сброс пароля, просто проигнорируйте это письмо.</p>", common.SystemName, link, link, common.VerificationValidMinutes)
 		err := common.SendEmail(subject, email, content)
 		if err != nil {
 			logger.LogError(c.Request.Context(), fmt.Sprintf("failed to send password reset email to %s: %s", email, err.Error()))
