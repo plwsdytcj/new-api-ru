@@ -33,8 +33,7 @@ interface HeroProps {
 export function Hero(props: HeroProps) {
   const { t } = useTranslation()
   const { status } = useStatus()
-  const docsUrl =
-    (status?.docs_link as string | undefined) || 'https://docs.newapi.pro'
+  const docsUrl = (status?.docs_link as string | undefined) || '/docs'
 
   const primaryTarget = props.isAuthenticated ? '/dashboard' : '/sign-up'
   const primaryLabel = props.isAuthenticated

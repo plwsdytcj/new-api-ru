@@ -29,6 +29,20 @@ import vi from './locales/vi.json'
 import zhTW from './locales/zh-TW.json'
 import zhCN from './locales/zh.json'
 
+const RUSSIA_FIRST_LANGUAGE_VERSION = 'russiaapi-default-language-v1'
+
+try {
+  if (
+    typeof window !== 'undefined' &&
+    window.localStorage.getItem(RUSSIA_FIRST_LANGUAGE_VERSION) !== 'applied'
+  ) {
+    window.localStorage.setItem('i18nextLng', 'ru')
+    window.localStorage.setItem(RUSSIA_FIRST_LANGUAGE_VERSION, 'applied')
+  }
+} catch {
+  /* localStorage may be unavailable in privacy mode */
+}
+
 function syncDocumentLanguage(language?: string) {
   if (typeof document === 'undefined') return
   document.documentElement.lang = toIntlLocale(language) ?? 'ru'

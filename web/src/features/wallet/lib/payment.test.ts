@@ -20,6 +20,7 @@ import assert from 'node:assert/strict'
 import { describe, test } from 'node:test'
 
 import { PAYMENT_TYPES } from '../constants'
+import type { TopupInfo } from '../types'
 import {
   dispatchSelectedPayment,
   getMinTopupAmount,
@@ -27,7 +28,6 @@ import {
   isWaffoPayment,
   isWaffoPancakePayment,
 } from './payment'
-import type { TopupInfo } from '../types'
 
 describe('payment type classification', () => {
   test('keeps Waffo and Waffo Pancake on their dedicated flows', () => {
