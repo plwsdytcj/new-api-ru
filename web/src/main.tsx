@@ -124,11 +124,13 @@ if (!rootElement) {
       }
     ).__RUNTIME_CONFIG__
     const browserTitle = runtimeConfig?.browserTitle || BROWSER_TITLE
-    document.title = browserTitle
-    const metaTitle = document.querySelector(
-      'meta[name="title"]'
-    ) as HTMLMetaElement | null
-    if (metaTitle) metaTitle.setAttribute('content', browserTitle)
+    if (document.documentElement.dataset.seoRendered !== 'true') {
+      document.title = browserTitle
+      const metaTitle = document.querySelector(
+        'meta[name="title"]'
+      ) as HTMLMetaElement | null
+      if (metaTitle) metaTitle.setAttribute('content', browserTitle)
+    }
 
     // Cache-first
     try {
@@ -157,6 +159,7 @@ if (!rootElement) {
     /* empty */
   }
 })()
+document.querySelector('#seo-static-content')?.remove()
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(

@@ -47,6 +47,8 @@ var buildFS embed.FS
 //go:embed web/dist/index.html
 var indexPage []byte
 
+var runtimePublicURL = "https://russiaapi.com"
+
 func main() {
 	startTime := time.Now()
 
@@ -198,6 +200,7 @@ func main() {
 	router.SetRouter(server, router.WebAssets{
 		BuildFS:   buildFS,
 		IndexPage: indexPage,
+		PublicURL: runtimePublicURL,
 	})
 	var port = os.Getenv("PORT")
 	if port == "" {
@@ -301,6 +304,7 @@ func InjectRuntimeBranding() error {
 	if parsedPublicURL.Path != "" || parsedPublicURL.RawQuery != "" || parsedPublicURL.Fragment != "" {
 		return fmt.Errorf("PUBLIC_URL must contain only scheme and host")
 	}
+	runtimePublicURL = publicURL
 
 	runtimeConfig, err := json.Marshal(map[string]string{
 		"browserTitle": browserTitle,

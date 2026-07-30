@@ -7,7 +7,11 @@ import (
 
 func TestInjectRuntimeBranding(t *testing.T) {
 	originalIndexPage := indexPage
-	t.Cleanup(func() { indexPage = originalIndexPage })
+	originalPublicURL := runtimePublicURL
+	t.Cleanup(func() {
+		indexPage = originalIndexPage
+		runtimePublicURL = originalPublicURL
+	})
 
 	indexPage = []byte(`<!doctype html>
 <link rel="canonical" href="__RUNTIME_PUBLIC_URL__/" />
@@ -35,7 +39,11 @@ func TestInjectRuntimeBranding(t *testing.T) {
 
 func TestInjectRuntimeBrandingRejectsInvalidPublicURL(t *testing.T) {
 	originalIndexPage := indexPage
-	t.Cleanup(func() { indexPage = originalIndexPage })
+	originalPublicURL := runtimePublicURL
+	t.Cleanup(func() {
+		indexPage = originalIndexPage
+		runtimePublicURL = originalPublicURL
+	})
 
 	indexPage = []byte("__RUNTIME_PUBLIC_URL__")
 	t.Setenv("PUBLIC_URL", "javascript:alert(1)")
