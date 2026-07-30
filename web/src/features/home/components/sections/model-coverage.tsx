@@ -17,17 +17,19 @@ export function ModelCoverage() {
 
   const groups = [
     {
+      code: 'US',
       eyebrow: t('US models'),
       title: t('GPT and American AI models'),
-      models: 'GPT · Claude · Gemini',
+      models: ['GPT', 'Claude', 'Gemini'],
       description: t(
         'Use an OpenAI-compatible interface for GPT and integrations with leading US model providers.'
       ),
     },
     {
+      code: 'CN',
       eyebrow: t('Chinese models'),
       title: t('Kimi, DeepSeek and Qwen'),
-      models: 'Kimi · DeepSeek · Qwen',
+      models: ['Kimi', 'DeepSeek', 'Qwen'],
       description: t(
         'Connect Chinese AI models through the same API format as they become available in the live catalog.'
       ),
@@ -57,17 +59,31 @@ export function ModelCoverage() {
               key={group.eyebrow}
               delay={index * 80}
               className={[
-                'py-8 md:p-8',
+                'py-8 md:p-9',
                 index === 0
                   ? 'border-border/60 border-b md:border-r md:border-b-0'
                   : '',
               ].join(' ')}
             >
-              <p className='text-muted-foreground text-xs font-semibold uppercase'>
-                {group.eyebrow}
-              </p>
-              <h3 className='mt-4 text-xl font-semibold'>{group.title}</h3>
-              <p className='mt-5 font-mono text-sm'>{group.models}</p>
+              <div className='flex items-center justify-between'>
+                <p className='text-muted-foreground text-xs font-semibold uppercase'>
+                  {group.eyebrow}
+                </p>
+                <span className='text-muted-foreground/50 font-mono text-xs'>
+                  {group.code}
+                </span>
+              </div>
+              <h3 className='mt-5 text-xl font-semibold'>{group.title}</h3>
+              <div className='mt-6 flex flex-wrap gap-2'>
+                {group.models.map((model) => (
+                  <span
+                    key={model}
+                    className='border-border/70 bg-muted/25 rounded-sm border px-2.5 py-1.5 font-mono text-xs'
+                  >
+                    {model}
+                  </span>
+                ))}
+              </div>
               <p className='text-muted-foreground mt-4 max-w-md text-sm leading-6'>
                 {group.description}
               </p>

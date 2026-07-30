@@ -29,7 +29,7 @@ import vi from './locales/vi.json'
 import zhTW from './locales/zh-TW.json'
 import zhCN from './locales/zh.json'
 
-const RUSSIA_FIRST_LANGUAGE_VERSION = 'russiaapi-default-language-v1'
+const RUSSIA_FIRST_LANGUAGE_VERSION = 'russiaapi-default-language-v2'
 
 try {
   if (

@@ -35,7 +35,7 @@ export function CTA(props: CTAProps) {
             {t('One endpoint for your next AI product.')}
           </h2>
         </div>
-        <div className='flex shrink-0 items-center gap-3'>
+        <div className='flex shrink-0 flex-wrap items-center gap-3'>
           <Button
             className='group h-11 rounded-md bg-[#111713] px-5 text-white hover:bg-[#253128] dark:bg-white dark:text-[#111713]'
             render={<Link to='/sign-up' />}

@@ -38,7 +38,7 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
   return (
     <div
       className={cn(
-        'border-border/70 bg-background w-full overflow-hidden rounded-lg border shadow-[0_24px_80px_-48px_rgba(15,23,42,0.5)]',
+        'border-border/70 bg-background w-full overflow-hidden rounded-md border shadow-[0_24px_80px_-52px_rgba(15,23,42,0.45)]',
         props.className
       )}
     >
@@ -67,8 +67,8 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
           className='border-border/60 border-b md:border-r md:border-b-0'
         >
           <div className='space-y-3'>
-            <CodeValue label='POST' value='/v1/messages' />
-            <CodeValue label={t('Model')} value='claude-sonnet' />
+            <CodeValue label='POST' value='/v1/chat/completions' />
+            <CodeValue label={t('Model')} value='gpt-4.1' />
             <CodeValue label={t('Token')} value='sk-live-••••••' />
           </div>
         </RouteStage>
@@ -124,12 +124,14 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
             <span className='text-emerald-400'>$</span>
             <span>base_url=https://russiaapi.com/v1</span>
           </div>
-          <div className='flex items-center gap-2 text-xs text-white/55'>
-            <span>OpenAI</span>
+          <div className='flex flex-wrap items-center gap-2 text-xs text-white/55'>
+            <span>GPT</span>
             <ArrowRight className='size-3' />
             <span>Claude</span>
             <ArrowRight className='size-3' />
-            <span>Gemini</span>
+            <span>Kimi</span>
+            <ArrowRight className='size-3' />
+            <span>DeepSeek</span>
           </div>
         </div>
       </div>

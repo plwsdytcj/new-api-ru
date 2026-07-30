@@ -16,7 +16,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { Link } from '@tanstack/react-router'
 import {
+  ArrowRight,
   ArrowUpRight,
   CircleDollarSign,
   ImageIcon,
@@ -27,6 +29,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PublicLayout } from '@/components/layout'
+import { Footer } from '@/components/layout/components/footer'
 import { PageTransition } from '@/components/page-transition'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -228,14 +231,15 @@ export function Pricing() {
 
   return (
     <PublicLayout showMainContainer={false}>
-      <PageTransition className='mx-auto w-full max-w-7xl px-4 pt-20 pb-12 sm:px-6 sm:pt-24'>
-        <header className='border-border border-b pb-7'>
+      <PageTransition className='mx-auto w-full max-w-7xl px-4 pt-24 pb-16 sm:px-6 sm:pt-28'>
+        <header className='border-border border-b pb-8'>
           <div className='flex flex-col justify-between gap-5 lg:flex-row lg:items-end'>
             <div className='max-w-3xl'>
-              <div className='text-primary text-sm font-semibold'>
-                RussiaAPI
+              <div className='text-muted-foreground flex items-center gap-2 text-xs font-semibold uppercase'>
+                <span className='size-1.5 rounded-full bg-emerald-500' />
+                {t('Live model catalog')}
               </div>
-              <h1 className='mt-2 text-3xl font-bold sm:text-4xl'>
+              <h1 className='mt-4 text-4xl leading-tight font-semibold tracking-normal sm:text-5xl'>
                 {t('Transparent API pricing')}
               </h1>
               <p className='text-muted-foreground mt-3 max-w-2xl text-sm leading-6 sm:text-base'>
@@ -244,17 +248,26 @@ export function Pricing() {
                 )}
               </p>
             </div>
-            <div className='grid grid-cols-2 gap-x-8 gap-y-2 text-sm lg:text-right'>
-              <div>
-                <div className='text-muted-foreground'>{t('Models')}</div>
-                <div className='mt-1 font-semibold tabular-nums'>
-                  {models.length}
+            <div className='flex flex-col gap-5 sm:flex-row sm:items-end'>
+              <div className='grid grid-cols-2 gap-x-8 gap-y-2 text-sm lg:text-right'>
+                <div>
+                  <div className='text-muted-foreground'>{t('Models')}</div>
+                  <div className='mt-1 font-semibold tabular-nums'>
+                    {models.length}
+                  </div>
+                </div>
+                <div>
+                  <div className='text-muted-foreground'>{t('Currency')}</div>
+                  <div className='mt-1 font-semibold'>USD / USDT</div>
                 </div>
               </div>
-              <div>
-                <div className='text-muted-foreground'>{t('Currency')}</div>
-                <div className='mt-1 font-semibold'>USD / Credits</div>
-              </div>
+              <Button
+                className='group h-10 rounded-md bg-[#111713] px-4 text-white hover:bg-[#253128] dark:bg-white dark:text-[#111713]'
+                render={<Link to='/sign-up' />}
+              >
+                {t('Create API key')}
+                <ArrowRight className='ml-1 size-4 transition-transform group-hover:translate-x-0.5' />
+              </Button>
             </div>
           </div>
         </header>
@@ -320,7 +333,7 @@ export function Pricing() {
             </div>
           </div>
 
-          <div className='border-border bg-background mt-4 overflow-hidden rounded-lg border'>
+          <div className='border-border bg-background mt-4 overflow-hidden rounded-md border'>
             <div className='bg-muted/40 border-border hidden grid-cols-[minmax(220px,1.3fr)_repeat(4,minmax(110px,0.75fr))_40px] gap-4 border-b px-5 py-3 text-xs font-medium lg:grid'>
               <div>{t('Model')}</div>
               <div>{t('Input')}</div>
@@ -371,6 +384,7 @@ export function Pricing() {
           />
         )}
       </PageTransition>
+      <Footer />
     </PublicLayout>
   )
 }

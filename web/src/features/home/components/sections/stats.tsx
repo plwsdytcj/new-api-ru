@@ -16,7 +16,7 @@ export function Stats() {
   const items = [
     {
       icon: Braces,
-      value: 'OpenAI · Claude · Gemini',
+      value: 'OpenAI · Anthropic',
       label: t('Compatible protocols'),
     },
     {
@@ -31,20 +31,20 @@ export function Stats() {
     },
     {
       icon: CreditCard,
-      value: t('Usage-based billing'),
-      label: t('Transparent request accounting'),
+      value: 'USDT',
+      label: t('Balance top up'),
     },
   ]
 
   return (
     <section className='border-border/60 bg-muted/20 border-b'>
-      <div className='mx-auto grid max-w-6xl grid-cols-1 divide-y px-5 sm:grid-cols-2 sm:divide-x sm:divide-y-0 sm:px-6 lg:grid-cols-4'>
+      <div className='mx-auto grid max-w-6xl grid-cols-2 divide-x divide-y px-5 sm:px-6 lg:grid-cols-4 lg:divide-y-0'>
         {items.map((item) => (
           <div
             key={item.value}
-            className='flex min-h-28 items-center gap-3 py-5 sm:px-5'
+            className='flex min-h-28 items-start gap-3 px-3 py-5 first:pl-0 lg:px-5 lg:first:pl-0'
           >
-            <item.icon className='text-muted-foreground size-4 shrink-0' />
+            <item.icon className='text-muted-foreground mt-0.5 size-4 shrink-0' />
             <div className='min-w-0'>
               <p className='text-sm font-semibold'>{item.value}</p>
               <p className='text-muted-foreground mt-1 text-xs'>{item.label}</p>
