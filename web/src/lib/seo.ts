@@ -24,18 +24,18 @@ type SEOPage = {
 }
 
 const HOME_DESCRIPTION =
-  'OpenAI-совместимый GPT API для разработчиков в России. Единый интерфейс для американских и китайских ИИ-моделей, включая GPT, Kimi, DeepSeek и Qwen.'
+  'ChatGPT, Claude, Kimi и DeepSeek через единый API в России. Полный каталог ведущих американских и китайских ИИ-моделей с автоматическим резервированием.'
 
 const PUBLIC_PAGES: Record<string, SEOPage> = {
   '/': {
-    title: 'GPT API в России — модели США и Китая | RussiaAPI',
+    title: 'ChatGPT, Claude, Kimi и DeepSeek API в России | RussiaAPI',
     description: HOME_DESCRIPTION,
     indexable: true,
   },
   '/pricing': {
-    title: 'Цены на GPT API в России и каталог моделей — RussiaAPI',
+    title: 'Цены ChatGPT, Claude, Kimi и DeepSeek API — RussiaAPI',
     description:
-      'Актуальные цены GPT API в России и каталог американских и китайских ИИ-моделей. Сравнение стоимости токенов и оплата по фактическому использованию.',
+      'Цены ChatGPT, Claude, Kimi, DeepSeek и других американских и китайских ИИ-моделей. Сравнение стоимости токенов и оплата по фактическому использованию.',
     indexable: true,
   },
   '/docs': {

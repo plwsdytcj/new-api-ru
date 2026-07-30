@@ -19,10 +19,10 @@ export function ModelCoverage() {
     {
       code: 'US',
       eyebrow: t('US models'),
-      title: t('GPT and American AI models'),
-      models: ['GPT', 'Claude', 'Gemini'],
+      title: t('ChatGPT, Claude and Gemini'),
+      models: ['ChatGPT', 'Claude', 'Gemini'],
       description: t(
-        'Use an OpenAI-compatible interface for GPT and integrations with leading US model providers.'
+        'Access leading American AI models through one OpenAI-compatible interface.'
       ),
     },
     {
@@ -44,11 +44,11 @@ export function ModelCoverage() {
             {t('Model catalog')}
           </p>
           <h2 className='mt-4 text-3xl leading-tight font-semibold tracking-normal md:text-4xl'>
-            {t('American and Chinese AI models in one API')}
+            {t('The complete catalog of American and Chinese AI models')}
           </h2>
           <p className='text-muted-foreground mt-5 text-base leading-7'>
             {t(
-              'RussiaAPI gives developers in Russia one integration surface for models from US and Chinese providers.'
+              'From ChatGPT and Claude to Kimi and DeepSeek, RussiaAPI brings leading models from the US and China together in one API.'
             )}
           </p>
         </AnimateInView>

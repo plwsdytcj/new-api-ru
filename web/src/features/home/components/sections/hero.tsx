@@ -52,7 +52,7 @@ export function Hero(props: HeroProps) {
   const signals = [
     {
       icon: Braces,
-      value: 'OpenAI · Anthropic',
+      value: 'ChatGPT · Claude',
       label: t('Compatible protocols'),
     },
     {
@@ -104,7 +104,7 @@ export function Hero(props: HeroProps) {
               RussiaAPI
             </span>
             <span className='text-foreground/68 mt-2 block max-w-[54rem] text-[0.66em] leading-[1.1]'>
-              {t('GPT API and leading AI models in Russia')}
+              {t('ChatGPT, Claude, Kimi and DeepSeek in one API')}
             </span>
           </h1>
 
@@ -113,7 +113,7 @@ export function Hero(props: HeroProps) {
             style={{ animationDelay: '100ms' }}
           >
             {t(
-              'Connect GPT and OpenAI-compatible clients through one endpoint in Russia. Use one interface for American and Chinese AI models, with automatic routing, failover and usage accounting.'
+              'Access leading American models such as ChatGPT and Claude, and Chinese models such as Kimi and DeepSeek. One API in Russia brings the full model catalog together with automatic routing and failover.'
             )}
           </p>
 
