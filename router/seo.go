@@ -182,7 +182,7 @@ func renderSEOIndex(indexPage []byte, publicURL string, requestPath string, page
 		var builder strings.Builder
 		fmt.Fprintf(
 			&builder,
-			`<main id="seo-static-content"><h1>%s</h1><p>%s</p>`,
+			`<noscript id="seo-static-content"><main><h1>%s</h1><p>%s</p>`,
 			html.EscapeString(page.Heading),
 			html.EscapeString(page.Summary),
 		)
@@ -194,7 +194,7 @@ func renderSEOIndex(indexPage []byte, publicURL string, requestPath string, page
 				html.EscapeString(detail.Summary),
 			)
 		}
-		builder.WriteString(`</main>`)
+		builder.WriteString(`</main></noscript>`)
 		staticMarkup = builder.String()
 	}
 	rendered = bytes.Replace(rendered, []byte("<!--seo-static-content-->"), []byte(staticMarkup), 1)

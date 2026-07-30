@@ -32,7 +32,7 @@ func TestRenderSEOIndexForPublicPage(t *testing.T) {
 		`<title>Цены на GPT API в России и каталог моделей — RussiaAPI</title>`,
 		`<link rel="canonical" href="https://example.com/pricing" />`,
 		`<meta name="robots" content="index, follow, max-image-preview:large" />`,
-		`<main id="seo-static-content">`,
+		`<noscript id="seo-static-content"><main>`,
 		`application/ld+json`,
 		`BreadcrumbList`,
 	} {
@@ -55,6 +55,7 @@ func TestRenderSEOIndexIncludesModelCoverage(t *testing.T) {
 		`GPT API и ведущие ИИ-модели в России`,
 		`Американские ИИ-модели через единый API`,
 		`Китайские ИИ-модели: Kimi, DeepSeek и Qwen`,
+		`</main></noscript>`,
 	} {
 		if !strings.Contains(rendered, expected) {
 			t.Errorf("rendered home page does not contain %q:\n%s", expected, rendered)
