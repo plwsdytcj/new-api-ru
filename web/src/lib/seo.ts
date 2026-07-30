@@ -24,18 +24,18 @@ type SEOPage = {
 }
 
 const HOME_DESCRIPTION =
-  'Единый OpenAI-совместимый API для доступа к GPT, Claude, Gemini и DeepSeek из России. Маршрутизация, резервирование и прозрачный учёт.'
+  'OpenAI-совместимый GPT API для разработчиков в России. Единый интерфейс для американских и китайских ИИ-моделей, включая GPT, Kimi, DeepSeek и Qwen.'
 
 const PUBLIC_PAGES: Record<string, SEOPage> = {
   '/': {
-    title: 'RussiaAPI — единый API для GPT, Claude, Gemini и DeepSeek',
+    title: 'GPT API в России — модели США и Китая | RussiaAPI',
     description: HOME_DESCRIPTION,
     indexable: true,
   },
   '/pricing': {
-    title: 'Цены на API GPT, Claude, Gemini и DeepSeek — RussiaAPI',
+    title: 'Цены на GPT API в России и каталог моделей — RussiaAPI',
     description:
-      'Актуальные цены RussiaAPI на входные и выходные токены GPT, Claude, Gemini и DeepSeek. Оплата по фактическому использованию.',
+      'Актуальные цены GPT API в России и каталог американских и китайских ИИ-моделей. Сравнение стоимости токенов и оплата по фактическому использованию.',
     indexable: true,
   },
   '/docs': {
@@ -84,9 +84,7 @@ const PUBLIC_PAGES: Record<string, SEOPage> = {
 }
 
 function normalizePathname(pathname: string): string {
-  const normalized = `/${pathname}`
-    .replaceAll(/\/+/g, '/')
-    .replace(/\/$/, '')
+  const normalized = `/${pathname}`.replaceAll(/\/+/g, '/').replace(/\/$/, '')
   return normalized || '/'
 }
 
@@ -100,9 +98,7 @@ function runtimePublicURL(): string {
 }
 
 function setNamedMeta(name: string, content: string) {
-  let element = document.querySelector<HTMLMetaElement>(
-    `meta[name="${name}"]`
-  )
+  let element = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`)
   if (!element) {
     element = document.createElement('meta')
     element.name = name
@@ -124,9 +120,7 @@ function setPropertyMeta(property: string, content: string) {
 }
 
 function setCanonical(href: string) {
-  let element = document.querySelector<HTMLLinkElement>(
-    'link[rel="canonical"]'
-  )
+  let element = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
   if (!element) {
     element = document.createElement('link')
     element.rel = 'canonical'

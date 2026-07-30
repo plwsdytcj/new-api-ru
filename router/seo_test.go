@@ -29,7 +29,7 @@ func TestRenderSEOIndexForPublicPage(t *testing.T) {
 
 	for _, expected := range []string{
 		`<html lang="ru" data-seo-rendered="true">`,
-		`<title>Цены на API GPT, Claude, Gemini и DeepSeek — RussiaAPI</title>`,
+		`<title>Цены на GPT API в России и каталог моделей — RussiaAPI</title>`,
 		`<link rel="canonical" href="https://example.com/pricing" />`,
 		`<meta name="robots" content="index, follow, max-image-preview:large" />`,
 		`<main id="seo-static-content">`,
@@ -38,6 +38,26 @@ func TestRenderSEOIndexForPublicPage(t *testing.T) {
 	} {
 		if !strings.Contains(rendered, expected) {
 			t.Errorf("rendered page does not contain %q:\n%s", expected, rendered)
+		}
+	}
+}
+
+func TestRenderSEOIndexIncludesModelCoverage(t *testing.T) {
+	rendered := string(renderSEOIndex(
+		[]byte(seoTestIndex),
+		"https://example.com",
+		"/",
+		publicSEOPages["/"],
+		true,
+	))
+
+	for _, expected := range []string{
+		`GPT API и ведущие ИИ-модели в России`,
+		`Американские ИИ-модели через единый API`,
+		`Китайские ИИ-модели: Kimi, DeepSeek и Qwen`,
+	} {
+		if !strings.Contains(rendered, expected) {
+			t.Errorf("rendered home page does not contain %q:\n%s", expected, rendered)
 		}
 	}
 }

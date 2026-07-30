@@ -15,20 +15,36 @@ type seoPage struct {
 	Description string
 	Heading     string
 	Summary     string
+	Details     []seoDetail
+}
+
+type seoDetail struct {
+	Heading string
+	Summary string
 }
 
 var publicSEOPages = map[string]seoPage{
 	"/": {
-		Title:       "RussiaAPI — единый API для GPT, Claude, Gemini и DeepSeek",
-		Description: "Единый OpenAI-совместимый API для доступа к GPT, Claude, Gemini и DeepSeek из России. Маршрутизация, резервирование и прозрачный учёт.",
-		Heading:     "Единый API для ведущих ИИ-моделей",
-		Summary:     "Подключайте GPT, Claude, Gemini и DeepSeek через одну OpenAI-совместимую точку доступа. Управляйте ключами, расходами и маршрутизацией в одном кабинете.",
+		Title:       "GPT API в России — модели США и Китая | RussiaAPI",
+		Description: "OpenAI-совместимый GPT API для разработчиков в России. Единый интерфейс для американских и китайских ИИ-моделей, включая GPT, Kimi, DeepSeek и Qwen.",
+		Heading:     "GPT API и ведущие ИИ-модели в России",
+		Summary:     "Подключайте GPT и OpenAI-совместимые клиенты через российскую точку доступа. RussiaAPI объединяет маршрутизацию, резервирование, ключи и учёт расходов.",
+		Details: []seoDetail{
+			{
+				Heading: "Американские ИИ-модели через единый API",
+				Summary: "Используйте единый OpenAI-совместимый формат для GPT и интеграций с моделями американских поставщиков. Доступность конкретной модели и актуальная цена указаны в каталоге тарифов.",
+			},
+			{
+				Heading: "Китайские ИИ-модели: Kimi, DeepSeek и Qwen",
+				Summary: "RussiaAPI развивает единый интерфейс для китайских моделей Kimi от Moonshot AI, DeepSeek и Qwen. Текущий список доступных моделей публикуется на странице тарифов.",
+			},
+		},
 	},
 	"/pricing": {
-		Title:       "Цены на API GPT, Claude, Gemini и DeepSeek — RussiaAPI",
-		Description: "Актуальные цены RussiaAPI на входные и выходные токены GPT, Claude, Gemini и DeepSeek. Оплата по фактическому использованию.",
+		Title:       "Цены на GPT API в России и каталог моделей — RussiaAPI",
+		Description: "Актуальные цены GPT API в России и каталог американских и китайских ИИ-моделей. Сравнение стоимости токенов и оплата по фактическому использованию.",
 		Heading:     "Цены на модели",
-		Summary:     "Сравните стоимость входных и выходных токенов, выберите подходящую модель и оплачивайте только фактическое использование API.",
+		Summary:     "Сравните стоимость входных и выходных токенов GPT и других доступных моделей. Каталог обновляется по мере подключения американских и китайских поставщиков.",
 	},
 	"/docs": {
 		Title:       "Документация RussiaAPI — подключение OpenAI API, Claude Code и Codex",
@@ -163,11 +179,23 @@ func renderSEOIndex(indexPage []byte, publicURL string, requestPath string, page
 
 	staticMarkup := ""
 	if indexable {
-		staticMarkup = fmt.Sprintf(
-			`<main id="seo-static-content"><h1>%s</h1><p>%s</p></main>`,
+		var builder strings.Builder
+		fmt.Fprintf(
+			&builder,
+			`<main id="seo-static-content"><h1>%s</h1><p>%s</p>`,
 			html.EscapeString(page.Heading),
 			html.EscapeString(page.Summary),
 		)
+		for _, detail := range page.Details {
+			fmt.Fprintf(
+				&builder,
+				`<section><h2>%s</h2><p>%s</p></section>`,
+				html.EscapeString(detail.Heading),
+				html.EscapeString(detail.Summary),
+			)
+		}
+		builder.WriteString(`</main>`)
+		staticMarkup = builder.String()
 	}
 	rendered = bytes.Replace(rendered, []byte("<!--seo-static-content-->"), []byte(staticMarkup), 1)
 	return rendered

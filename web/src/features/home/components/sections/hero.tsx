@@ -65,7 +65,7 @@ export function Hero(props: HeroProps) {
           >
             RussiaAPI
             <span className='text-muted-foreground block'>
-              {t('One API for leading AI models')}
+              {t('GPT API and leading AI models in Russia')}
             </span>
           </h1>
 
@@ -74,7 +74,7 @@ export function Hero(props: HeroProps) {
             style={{ animationDelay: '100ms' }}
           >
             {t(
-              'Connect OpenAI-compatible, Claude and Gemini clients through one endpoint. Routing, failover and usage accounting are handled automatically.'
+              'Connect GPT and OpenAI-compatible clients through one endpoint in Russia. Use one interface for American and Chinese AI models, with automatic routing, failover and usage accounting.'
             )}
           </p>
 
