@@ -118,13 +118,6 @@ function LegalLinks(props: { leadingSeparator?: boolean }) {
       href: '/receipt-policy',
     })
   }
-  if (status?.company_details_enabled) {
-    items.push({
-      key: 'company-details',
-      label: t('Company details'),
-      href: '/company-details',
-    })
-  }
   if (items.length === 0) {
     return null
   }

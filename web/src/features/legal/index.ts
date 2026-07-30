@@ -20,7 +20,6 @@ export { UserAgreement } from './user-agreement'
 export { PrivacyPolicy } from './privacy-policy'
 export {
   BillingPolicy,
-  CompanyDetails,
   ReceiptPolicy,
   RefundPolicy,
 } from './service-policies'

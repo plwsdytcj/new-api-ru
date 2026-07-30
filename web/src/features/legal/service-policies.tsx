@@ -18,7 +18,6 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import {
   getBillingPolicy,
-  getCompanyDetails,
   getReceiptPolicy,
   getRefundPolicy,
 } from './api'
@@ -42,17 +41,6 @@ export function BillingPolicy() {
       queryKey='billing-policy'
       fetchDocument={getBillingPolicy}
       emptyMessage='Правила тарификации пока не опубликованы.'
-    />
-  )
-}
-
-export function CompanyDetails() {
-  return (
-    <LegalDocument
-      title='Реквизиты компании'
-      queryKey='company-details'
-      fetchDocument={getCompanyDetails}
-      emptyMessage='Реквизиты оператора пока не опубликованы.'
     />
   )
 }

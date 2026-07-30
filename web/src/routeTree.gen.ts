@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as BillingPolicyRouteImport } from './routes/billing-policy'
-import { Route as CompanyDetailsRouteImport } from './routes/company-details'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 import { Route as ReceiptPolicyRouteImport } from './routes/receipt-policy'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
@@ -90,11 +89,6 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const BillingPolicyRoute = BillingPolicyRouteImport.update({
   id: '/billing-policy',
   path: '/billing-policy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CompanyDetailsRoute = CompanyDetailsRouteImport.update({
-  id: '/company-details',
-  path: '/company-details',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
@@ -427,7 +421,6 @@ const AuthenticatedSystemSettingsSiteSectionRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/billing-policy': typeof BillingPolicyRoute
-  '/company-details': typeof CompanyDetailsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/receipt-policy': typeof ReceiptPolicyRoute
   '/refund-policy': typeof RefundPolicyRoute
@@ -491,7 +484,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/billing-policy': typeof BillingPolicyRoute
-  '/company-details': typeof CompanyDetailsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/receipt-policy': typeof ReceiptPolicyRoute
   '/refund-policy': typeof RefundPolicyRoute
@@ -557,7 +549,6 @@ export interface FileRoutesById {
   '/(auth)': typeof authRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/billing-policy': typeof BillingPolicyRoute
-  '/company-details': typeof CompanyDetailsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
   '/receipt-policy': typeof ReceiptPolicyRoute
   '/refund-policy': typeof RefundPolicyRoute
@@ -623,7 +614,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/billing-policy'
-    | '/company-details'
     | '/privacy-policy'
     | '/receipt-policy'
     | '/refund-policy'
@@ -687,7 +677,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/billing-policy'
-    | '/company-details'
     | '/privacy-policy'
     | '/receipt-policy'
     | '/refund-policy'
@@ -752,7 +741,6 @@ export interface FileRouteTypes {
     | '/(auth)'
     | '/_authenticated'
     | '/billing-policy'
-    | '/company-details'
     | '/privacy-policy'
     | '/receipt-policy'
     | '/refund-policy'
@@ -819,7 +807,6 @@ export interface RootRouteChildren {
   authRouteRoute: typeof authRouteRouteWithChildren
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   BillingPolicyRoute: typeof BillingPolicyRoute
-  CompanyDetailsRoute: typeof CompanyDetailsRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
   ReceiptPolicyRoute: typeof ReceiptPolicyRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
@@ -866,13 +853,6 @@ declare module '@tanstack/react-router' {
       path: '/billing-policy'
       fullPath: '/billing-policy'
       preLoaderRoute: typeof BillingPolicyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/company-details': {
-      id: '/company-details'
-      path: '/company-details'
-      fullPath: '/company-details'
-      preLoaderRoute: typeof CompanyDetailsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy-policy': {
@@ -1430,7 +1410,6 @@ const rootRouteChildren: RootRouteChildren = {
   authRouteRoute: authRouteRouteWithChildren,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   BillingPolicyRoute: BillingPolicyRoute,
-  CompanyDetailsRoute: CompanyDetailsRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
   ReceiptPolicyRoute: ReceiptPolicyRoute,
   RefundPolicyRoute: RefundPolicyRoute,

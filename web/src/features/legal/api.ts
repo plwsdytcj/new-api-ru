@@ -40,11 +40,6 @@ export async function getBillingPolicy() {
   return res.data
 }
 
-export async function getCompanyDetails() {
-  const res = await api.get<LegalDocumentResponse>('/api/company-details')
-  return res.data
-}
-
 export async function getReceiptPolicy() {
   const res = await api.get<LegalDocumentResponse>('/api/receipt-policy')
   return res.data
