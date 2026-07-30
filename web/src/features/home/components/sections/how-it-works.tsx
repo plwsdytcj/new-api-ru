@@ -34,11 +34,11 @@ export function HowItWorks() {
   ]
 
   return (
-    <section className='bg-[#111713] px-5 py-20 text-white sm:px-6 md:py-24'>
+    <section className='bg-[#14233d] px-5 py-18 text-white sm:px-6 md:py-22'>
       <div className='mx-auto max-w-6xl'>
         <AnimateInView className='flex flex-col justify-between gap-5 md:flex-row md:items-end'>
           <div>
-            <p className='text-xs font-semibold text-emerald-400 uppercase'>
+            <p className='text-xs font-semibold text-[#ff7378] uppercase'>
               {t('Quick start')}
             </p>
             <h2 className='mt-4 max-w-xl text-3xl leading-tight font-semibold tracking-normal md:text-4xl'>
@@ -57,7 +57,7 @@ export function HowItWorks() {
             <div key={step.number} className='contents'>
               <AnimateInView
                 delay={index * 90}
-                className='border border-white/15 p-5'
+                className='border border-white/15 bg-white/[0.025] p-5'
               >
                 <span className='font-mono text-xs text-white/40'>
                   {step.number}

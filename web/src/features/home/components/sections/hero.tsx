@@ -17,7 +17,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { Link } from '@tanstack/react-router'
-import { ArrowRight, BookOpen, Check, MapPin, Send } from 'lucide-react'
+import {
+  ArrowRight,
+  BookOpen,
+  Braces,
+  Check,
+  CreditCard,
+  KeyRound,
+  MapPin,
+  RefreshCw,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { CopyButton } from '@/components/copy-button'
@@ -35,44 +44,72 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
   const { status } = useStatus()
   const docsUrl = (status?.docs_link as string | undefined) || '/docs'
-  const telegramUrl = String(status?.support_telegram_url || '')
 
   const primaryTarget = props.isAuthenticated ? '/dashboard' : '/sign-up'
   const primaryLabel = props.isAuthenticated
     ? t('Go to Dashboard')
     : t('Create API key')
+  const signals = [
+    {
+      icon: Braces,
+      value: 'OpenAI · Anthropic',
+      label: t('Compatible protocols'),
+    },
+    {
+      icon: KeyRound,
+      value: t('One API key'),
+      label: t('For every connected model'),
+    },
+    {
+      icon: RefreshCw,
+      value: t('Automatic failover'),
+      label: t('Across configured channels'),
+    },
+    {
+      icon: CreditCard,
+      value: 'USDT',
+      label: t('Balance top up'),
+    },
+  ]
 
   return (
-    <section className='relative overflow-hidden border-b px-5 pt-24 pb-12 sm:px-6 md:pt-30 md:pb-16'>
+    <section className='relative overflow-hidden border-b px-5 pt-24 pb-14 sm:px-6 md:pt-28 md:pb-18'>
       <div
         aria-hidden
-        className='pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,black,transparent_76%)] bg-[size:56px_56px] opacity-[0.14]'
+        className='pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,black,transparent_70%)] bg-[size:64px_64px] opacity-[0.12]'
       />
 
       <div className='mx-auto max-w-6xl'>
-        <div className='max-w-4xl'>
-          <div className='landing-animate-fade-up text-muted-foreground mb-6 flex flex-wrap items-center gap-2 text-xs font-medium opacity-0'>
-            <MapPin className='size-3.5 text-emerald-600' />
-            <span>{t('Infrastructure for developers in Russia')}</span>
-            <span className='bg-border size-1 rounded-full' />
-            <span className='inline-flex items-center gap-1.5 text-emerald-700 dark:text-emerald-400'>
-              <span className='size-1.5 rounded-full bg-emerald-500' />
+        <div className='max-w-[58rem]'>
+          <div className='landing-animate-fade-up mb-7 flex flex-wrap items-center gap-3 opacity-0'>
+            <span className='inline-flex items-center gap-2 text-xs font-semibold text-[#14233d] dark:text-white'>
+              <MapPin className='size-3.5 text-[#e5484d]' />
+              {t('Infrastructure for developers in Russia')}
+            </span>
+            <span className='bg-border h-4 w-px' />
+            <span className='inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-400'>
+              <span className='relative flex size-2'>
+                <span className='absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-40' />
+                <span className='relative inline-flex size-2 rounded-full bg-emerald-500' />
+              </span>
               {t('Operational')}
             </span>
           </div>
 
           <h1
-            className='landing-animate-fade-up text-[2.75rem] leading-[1.03] font-semibold tracking-normal opacity-0 sm:text-6xl md:text-7xl'
+            className='landing-animate-fade-up text-[2.65rem] leading-[1.04] font-semibold tracking-normal text-balance opacity-0 sm:text-6xl md:text-[4.25rem]'
             style={{ animationDelay: '50ms' }}
           >
-            RussiaAPI
-            <span className='text-muted-foreground mt-2 block max-w-4xl text-[0.72em] leading-[1.08]'>
+            <span className='block text-[#14233d] dark:text-white'>
+              RussiaAPI
+            </span>
+            <span className='text-foreground/68 mt-2 block max-w-[54rem] text-[0.66em] leading-[1.1]'>
               {t('GPT API and leading AI models in Russia')}
             </span>
           </h1>
 
           <p
-            className='landing-animate-fade-up text-muted-foreground mt-7 max-w-2xl text-base leading-7 opacity-0 md:text-lg'
+            className='landing-animate-fade-up text-muted-foreground mt-6 max-w-3xl text-base leading-7 text-pretty opacity-0 md:text-[17px]'
             style={{ animationDelay: '100ms' }}
           >
             {t(
@@ -83,7 +120,7 @@ export function Hero(props: HeroProps) {
           <div className='landing-animate-fade-up mt-8 flex flex-col gap-5 opacity-0 sm:flex-row sm:items-center'>
             <div className='flex flex-wrap items-center gap-3'>
               <Button
-                className='group h-11 rounded-md bg-[#111713] px-5 text-white hover:bg-[#253128] dark:bg-white dark:text-[#111713]'
+                className='group h-11 rounded-md bg-[#14233d] px-5 text-white shadow-[0_8px_24px_-14px_rgba(20,35,61,0.9)] hover:bg-[#223655] dark:bg-white dark:text-[#14233d]'
                 render={<Link to={primaryTarget} />}
               >
                 {primaryLabel}
@@ -98,7 +135,7 @@ export function Hero(props: HeroProps) {
               </Button>
               <Button
                 variant='ghost'
-                className='h-11 rounded-md px-4'
+                className='h-11 rounded-md px-3.5'
                 render={
                   docsUrl.startsWith('http') ? (
                     <a
@@ -114,27 +151,11 @@ export function Hero(props: HeroProps) {
                 <BookOpen className='mr-2 size-4' />
                 {t('Docs')}
               </Button>
-              {telegramUrl && (
-                <Button
-                  variant='ghost'
-                  className='h-11 rounded-md px-4'
-                  render={
-                    <a
-                      href={telegramUrl}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    />
-                  }
-                >
-                  <Send className='mr-2 size-4' />
-                  Telegram
-                </Button>
-              )}
             </div>
           </div>
 
           <div
-            className='landing-animate-fade-up border-border/70 mt-8 flex w-full max-w-2xl flex-col border-y py-3 opacity-0 sm:flex-row sm:items-center sm:justify-between'
+            className='landing-animate-fade-up border-border/70 mt-8 flex w-full max-w-3xl flex-col border-y py-3 opacity-0 sm:flex-row sm:items-center sm:justify-between'
             style={{ animationDelay: '190ms' }}
           >
             <div className='flex min-w-0 items-center gap-3'>
@@ -159,8 +180,35 @@ export function Hero(props: HeroProps) {
         </div>
 
         <div
-          className='landing-animate-fade-up mt-10 opacity-0 md:mt-12'
-          style={{ animationDelay: '220ms' }}
+          className='landing-animate-fade-up border-border/70 mt-10 grid grid-cols-2 border-y opacity-0 lg:grid-cols-4'
+          style={{ animationDelay: '210ms' }}
+        >
+          {signals.map((signal, index) => (
+            <div
+              key={signal.value}
+              className={[
+                'flex min-h-24 items-start gap-3 px-4 py-5 first:pl-0 lg:px-5',
+                index % 2 === 0 ? 'border-r' : '',
+                index < 2 ? 'border-b lg:border-b-0' : '',
+                index < 3 ? 'lg:border-r' : '',
+              ].join(' ')}
+            >
+              <signal.icon className='mt-0.5 size-4 shrink-0 text-[#e5484d]' />
+              <div className='min-w-0'>
+                <p className='text-sm leading-5 font-semibold'>
+                  {signal.value}
+                </p>
+                <p className='text-muted-foreground mt-1 text-xs leading-5'>
+                  {signal.label}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div
+          className='landing-animate-fade-up mt-8 opacity-0 md:mt-10'
+          style={{ animationDelay: '250ms' }}
         >
           <HeroTerminalDemo />
         </div>

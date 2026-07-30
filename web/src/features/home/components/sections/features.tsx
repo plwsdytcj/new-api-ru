@@ -51,11 +51,11 @@ export function Features() {
   ]
 
   return (
-    <section className='border-border/60 border-b px-5 py-20 sm:px-6 md:py-28'>
+    <section className='border-border/60 border-b px-5 py-18 sm:px-6 md:py-22'>
       <div className='mx-auto max-w-6xl'>
         <AnimateInView className='grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16'>
           <div>
-            <p className='text-muted-foreground text-xs font-semibold uppercase'>
+            <p className='text-xs font-semibold text-[#e5484d] uppercase'>
               {t('Routing layer')}
             </p>
             <h2 className='mt-4 text-3xl leading-tight font-semibold tracking-normal md:text-4xl'>
@@ -69,7 +69,7 @@ export function Features() {
           </p>
         </AnimateInView>
 
-        <div className='border-border/60 mt-14 grid border-y md:grid-cols-2'>
+        <div className='border-border/60 mt-12 grid border-y md:grid-cols-2'>
           {features.map((feature, index) => (
             <AnimateInView
               key={feature.number}

@@ -25,10 +25,10 @@ export function CTA(props: CTAProps) {
   if (props.isAuthenticated) return null
 
   return (
-    <section className='border-border/60 border-b px-5 py-20 sm:px-6 md:py-24'>
+    <section className='border-border/60 border-b px-5 py-18 sm:px-6 md:py-22'>
       <AnimateInView className='mx-auto flex max-w-6xl flex-col justify-between gap-8 md:flex-row md:items-center'>
         <div>
-          <p className='text-muted-foreground text-xs font-semibold uppercase'>
+          <p className='text-xs font-semibold text-[#e5484d] uppercase'>
             {t('Start building')}
           </p>
           <h2 className='mt-3 max-w-2xl text-3xl leading-tight font-semibold tracking-normal md:text-4xl'>
@@ -37,7 +37,7 @@ export function CTA(props: CTAProps) {
         </div>
         <div className='flex shrink-0 flex-wrap items-center gap-3'>
           <Button
-            className='group h-11 rounded-md bg-[#111713] px-5 text-white hover:bg-[#253128] dark:bg-white dark:text-[#111713]'
+            className='group h-11 rounded-md bg-[#14233d] px-5 text-white hover:bg-[#223655] dark:bg-white dark:text-[#14233d]'
             render={<Link to='/sign-up' />}
           >
             {t('Create API key')}

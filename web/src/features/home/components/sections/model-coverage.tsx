@@ -37,10 +37,10 @@ export function ModelCoverage() {
   ]
 
   return (
-    <section className='border-border/60 border-b px-5 py-20 sm:px-6 md:py-24'>
+    <section className='border-border/60 border-b px-5 py-18 sm:px-6 md:py-22'>
       <div className='mx-auto max-w-6xl'>
         <AnimateInView className='max-w-3xl'>
-          <p className='text-muted-foreground text-xs font-semibold uppercase'>
+          <p className='text-xs font-semibold text-[#e5484d] uppercase'>
             {t('Model catalog')}
           </p>
           <h2 className='mt-4 text-3xl leading-tight font-semibold tracking-normal md:text-4xl'>
@@ -53,7 +53,7 @@ export function ModelCoverage() {
           </p>
         </AnimateInView>
 
-        <div className='border-border/60 mt-12 grid border-y md:grid-cols-2'>
+        <div className='border-border/60 mt-10 grid border-y md:grid-cols-2'>
           {groups.map((group, index) => (
             <AnimateInView
               key={group.eyebrow}

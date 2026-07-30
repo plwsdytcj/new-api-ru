@@ -38,7 +38,7 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
   return (
     <div
       className={cn(
-        'border-border/70 bg-background w-full overflow-hidden rounded-md border shadow-[0_24px_80px_-52px_rgba(15,23,42,0.45)]',
+        'border-border/80 bg-background w-full overflow-hidden rounded-md border shadow-[0_26px_70px_-48px_rgba(20,35,61,0.6)]',
         props.className
       )}
     >
@@ -118,7 +118,7 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
         </RouteStage>
       </div>
 
-      <div className='border-border/60 bg-[#111713] px-4 py-3 text-white sm:px-5'>
+      <div className='border-border/60 bg-[#14233d] px-4 py-3 text-white sm:px-5'>
         <div className='flex flex-wrap items-center justify-between gap-3'>
           <div className='flex items-center gap-2 font-mono text-xs text-white/70'>
             <span className='text-emerald-400'>$</span>

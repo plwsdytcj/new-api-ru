@@ -165,6 +165,16 @@ export function OAuthProviders({
     }
   }
 
+  providerButtons.sort((a, b) => {
+    const priority = (key: string) => {
+      if (key.includes('yandex')) return 0
+      if (key === 'oidc' || key.includes('google')) return 1
+      if (key.includes('telegram')) return 2
+      return 3
+    }
+    return priority(a.key) - priority(b.key)
+  })
+
   if (providerButtons.length === 0) return null
 
   return (
@@ -193,7 +203,13 @@ export function OAuthProviders({
                   if (onBeforeLogin?.() === false) return
                   onClick()
                 }}
-                className='h-11 w-full justify-center gap-2 rounded-lg'
+                className={cn(
+                  'h-11 w-full justify-center gap-2 rounded-md bg-background font-medium shadow-none',
+                  key.includes('yandex') &&
+                    'border-[#fc3f1d]/25 hover:border-[#fc3f1d]/50 hover:bg-[#fc3f1d]/[0.035]',
+                  (key === 'oidc' || key.includes('google')) &&
+                    'border-[#4285f4]/20 hover:border-[#4285f4]/45 hover:bg-[#4285f4]/[0.035]'
+                )}
               >
                 {icon}
                 {label}

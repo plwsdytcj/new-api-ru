@@ -22,7 +22,6 @@ import { useTranslation } from 'react-i18next'
 import { useStatus } from '@/hooks/use-status'
 
 import { AuthLayout } from '../auth-layout'
-import { TermsFooter } from '../components/terms-footer'
 import { UserAuthForm } from './components/user-auth-form'
 
 export function SignIn() {
@@ -32,9 +31,12 @@ export function SignIn() {
 
   return (
     <AuthLayout>
-      <div className='border-border/70 bg-background w-full space-y-8 rounded-lg border p-6 shadow-[0_24px_80px_-52px_rgba(15,23,42,0.5)] sm:p-8'>
+      <div className='w-full space-y-8'>
         <div className='space-y-2'>
-          <h2 className='text-center text-2xl font-semibold tracking-normal sm:text-left'>
+          <p className='font-mono text-[11px] font-semibold text-[#e5484d] uppercase'>
+            RussiaAPI ID
+          </p>
+          <h2 className='text-left text-3xl font-semibold tracking-normal'>
             {t('Sign in')}
           </h2>
           {!status?.self_use_mode_enabled &&
@@ -53,12 +55,6 @@ export function SignIn() {
         </div>
 
         <UserAuthForm redirectTo={redirect} />
-
-        <TermsFooter
-          variant='sign-in'
-          status={status}
-          className='text-center'
-        />
       </div>
     </AuthLayout>
   )
