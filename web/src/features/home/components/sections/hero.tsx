@@ -17,7 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { Link } from '@tanstack/react-router'
-import { ArrowRight, BookOpen, MapPin } from 'lucide-react'
+import { ArrowRight, BookOpen, MapPin, Send } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/ui/button'
@@ -34,6 +34,7 @@ export function Hero(props: HeroProps) {
   const { t } = useTranslation()
   const { status } = useStatus()
   const docsUrl = (status?.docs_link as string | undefined) || '/docs'
+  const telegramUrl = String(status?.support_telegram_url || '')
 
   const primaryTarget = props.isAuthenticated ? '/dashboard' : '/sign-up'
   const primaryLabel = props.isAuthenticated
@@ -109,6 +110,22 @@ export function Hero(props: HeroProps) {
               <BookOpen className='mr-2 size-4' />
               {t('Docs')}
             </Button>
+            {telegramUrl && (
+              <Button
+                variant='ghost'
+                className='h-11 rounded-md px-4'
+                render={
+                  <a
+                    href={telegramUrl}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  />
+                }
+              >
+                <Send className='mr-2 size-4' />
+                {t('Join Telegram community')}
+              </Button>
+            )}
           </div>
         </div>
 
