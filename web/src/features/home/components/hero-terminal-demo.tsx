@@ -38,23 +38,23 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
   return (
     <div
       className={cn(
-        'border-border/80 bg-background w-full overflow-hidden rounded-md border shadow-[0_26px_70px_-48px_rgba(20,35,61,0.6)]',
+        'border-border/80 bg-background w-full overflow-hidden rounded-md border shadow-[0_34px_90px_-52px_rgba(20,35,61,0.72)]',
         props.className
       )}
     >
-      <div className='border-border/60 bg-muted/30 flex min-h-11 flex-wrap items-center justify-between gap-3 border-b px-4 py-2.5 sm:px-5'>
+      <div className='border-border/60 bg-[#14233d] flex min-h-12 flex-wrap items-center justify-between gap-3 border-b px-4 py-2.5 text-white sm:px-5'>
         <div className='flex min-w-0 items-center gap-3'>
           <span className='size-2 shrink-0 rounded-full bg-emerald-500' />
-          <span className='text-foreground/75 font-mono text-xs'>
+          <span className='font-mono text-xs text-white/80'>
             req_7B2F91
           </span>
-          <span className='text-muted-foreground hidden text-xs sm:inline'>
+          <span className='hidden text-xs text-white/45 sm:inline'>
             {t('Live routing preview')}
           </span>
         </div>
         <div className='flex items-center gap-2 font-mono text-xs'>
-          <span className='text-muted-foreground'>184 ms</span>
-          <span className='rounded bg-emerald-500/10 px-2 py-1 font-semibold text-emerald-700 dark:text-emerald-400'>
+          <span className='text-white/45'>184 ms</span>
+          <span className='rounded bg-emerald-400/15 px-2 py-1 font-semibold text-emerald-300'>
             200 OK
           </span>
         </div>
@@ -118,20 +118,20 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
         </RouteStage>
       </div>
 
-      <div className='border-border/60 bg-[#14233d] px-4 py-3 text-white sm:px-5'>
+      <div className='border-border/60 bg-[#0d182b] px-4 py-3 text-white sm:px-5'>
         <div className='flex flex-wrap items-center justify-between gap-3'>
           <div className='flex items-center gap-2 font-mono text-xs text-white/70'>
             <span className='text-emerald-400'>$</span>
             <span>base_url=https://russiaapi.com/v1</span>
           </div>
           <div className='flex flex-wrap items-center gap-2 text-xs text-white/55'>
-            <span>GPT</span>
+            <span>ChatGPT</span>
             <ArrowRight className='size-3' />
             <span>Claude</span>
             <ArrowRight className='size-3' />
-            <span>Kimi</span>
-            <ArrowRight className='size-3' />
             <span>DeepSeek</span>
+            <ArrowRight className='size-3' />
+            <span>+ {t('More models')}</span>
           </div>
         </div>
       </div>
