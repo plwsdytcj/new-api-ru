@@ -287,7 +287,7 @@ func InjectGoogleAnalytics() {
 func InjectRuntimeBranding() error {
 	browserTitle := strings.TrimSpace(os.Getenv("BROWSER_TITLE"))
 	if browserTitle == "" {
-		browserTitle = "Best AI API in Russia"
+		browserTitle = "API нейросетей для России | RussiaAPI"
 	}
 
 	publicURL := strings.TrimRight(strings.TrimSpace(os.Getenv("PUBLIC_URL")), "/")

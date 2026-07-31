@@ -17,12 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { Link } from '@tanstack/react-router'
-import {
-  ArrowRight,
-  BookOpen,
-  Check,
-  MapPin,
-} from 'lucide-react'
+import { ArrowRight, BookOpen, Check, MapPin } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 import { CopyButton } from '@/components/copy-button'
@@ -49,7 +44,7 @@ export function Hero(props: HeroProps) {
   const chineseModels = ['DeepSeek', 'Kimi', 'Qwen', 'GLM']
 
   return (
-    <section className='relative overflow-hidden border-b bg-[#fbfcfe] px-5 pt-24 pb-14 sm:px-6 md:pt-30 md:pb-20 dark:bg-background'>
+    <section className='dark:bg-background relative overflow-hidden border-b bg-[#fbfcfe] px-5 pt-24 pb-14 sm:px-6 md:pt-30 md:pb-20'>
       <div
         aria-hidden
         className='pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,black,transparent_62%)] bg-[size:64px_64px] opacity-[0.16]'
@@ -64,7 +59,7 @@ export function Hero(props: HeroProps) {
           <div className='landing-animate-fade-up mb-7 flex flex-wrap items-center gap-3 opacity-0'>
             <span className='inline-flex items-center gap-2 text-xs font-semibold text-[#14233d] dark:text-white'>
               <MapPin className='size-3.5 text-[#e5484d]' />
-              {t('Infrastructure for developers in Russia')}
+              {t('Built for Russia')}
             </span>
             <span className='bg-border h-4 w-px' />
             <span className='inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-400'>
@@ -84,7 +79,7 @@ export function Hero(props: HeroProps) {
               RussiaAPI
             </span>
             <span className='text-foreground/68 mt-3 block max-w-[59rem] text-[0.62em] leading-[1.08]'>
-              {t('All leading AI models in one API')}
+              {t('All leading AI models. One API built for Russia.')}
             </span>
           </h1>
 
@@ -93,7 +88,7 @@ export function Hero(props: HeroProps) {
             style={{ animationDelay: '100ms' }}
           >
             {t(
-              'Access leading AI models from around the world, from ChatGPT and Claude to Kimi and DeepSeek, plus many more. One API in Russia brings the full catalog together with automatic routing and failover.'
+              'A single access point in Russia for leading international and Chinese AI models, with a Russian interface, documentation, automatic routing and one balance.'
             )}
           </p>
 

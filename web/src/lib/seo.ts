@@ -24,29 +24,28 @@ type SEOPage = {
 }
 
 const HOME_DESCRIPTION =
-  'Все ведущие ИИ-модели через единый API в России: ChatGPT, Claude, Gemini, Kimi, DeepSeek, Qwen и другие. Международные и китайские модели с автоматическим резервированием.'
+  'RussiaAPI — единый API нейросетей, созданный для разработчиков в России. ChatGPT, Claude, Gemini, DeepSeek, Kimi, Qwen и другие модели через российскую точку доступа.'
 
 const PUBLIC_PAGES: Record<string, SEOPage> = {
   '/': {
-    title: 'Все ведущие ИИ-модели в одном API в России | RussiaAPI',
+    title: 'API нейросетей для России — все модели | RussiaAPI',
     description: HOME_DESCRIPTION,
     indexable: true,
   },
   '/pricing': {
-    title: 'Цены ведущих ИИ-моделей и API в России — RussiaAPI',
+    title: 'Цены API нейросетей для России | RussiaAPI',
     description:
       'Цены ChatGPT, Claude, Kimi, DeepSeek и других американских и китайских ИИ-моделей. Сравнение стоимости токенов и оплата по фактическому использованию.',
     indexable: true,
   },
   '/docs': {
-    title:
-      'Документация RussiaAPI — подключение OpenAI API, Claude Code и Codex',
+    title: 'Документация API нейросетей для России | RussiaAPI',
     description:
       'Русская документация RussiaAPI: получение API-ключа, OpenAI-совместимые запросы, настройка Claude Code, Codex и обработка ошибок.',
     indexable: true,
   },
   '/about': {
-    title: 'О RussiaAPI — инфраструктура доступа к ИИ-моделям',
+    title: 'RussiaAPI — AI-инфраструктура для России',
     description:
       'RussiaAPI объединяет доступ к ведущим ИИ-моделям через совместимый API с маршрутизацией, резервированием и контролем расходов.',
     indexable: true,
@@ -129,6 +128,56 @@ function setCanonical(href: string) {
   element.href = href
 }
 
+function syncStructuredData(pathname: string, canonical: string) {
+  const elementId = 'russiaapi-structured-data'
+  const existing = document.querySelector(`#${elementId}`)
+  if (pathname !== '/') {
+    existing?.remove()
+    return
+  }
+
+  const publicURL = runtimePublicURL()
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${publicURL}/#organization`,
+        name: 'RussiaAPI',
+        url: `${publicURL}/`,
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${publicURL}/#website`,
+        url: `${publicURL}/`,
+        name: 'RussiaAPI',
+        inLanguage: 'ru-RU',
+        publisher: { '@id': `${publicURL}/#organization` },
+      },
+      {
+        '@type': 'Service',
+        '@id': `${publicURL}/#service`,
+        name: 'RussiaAPI',
+        serviceType: 'Единый API доступа к моделям искусственного интеллекта',
+        description: HOME_DESCRIPTION,
+        url: canonical,
+        provider: { '@id': `${publicURL}/#organization` },
+        areaServed: {
+          '@type': 'Country',
+          name: 'Russia',
+        },
+        availableLanguage: ['ru', 'en'],
+      },
+    ],
+  }
+
+  const script = existing || document.createElement('script')
+  script.id = elementId
+  script.setAttribute('type', 'application/ld+json')
+  script.textContent = JSON.stringify(structuredData)
+  if (!existing) document.head.appendChild(script)
+}
+
 export function syncSEOForPath(pathname: string) {
   const normalizedPath = normalizePathname(pathname)
   const page = PUBLIC_PAGES[normalizedPath] || {
@@ -159,4 +208,5 @@ export function syncSEOForPath(pathname: string) {
   setNamedMeta('twitter:card', 'summary')
   setNamedMeta('twitter:title', page.title)
   setNamedMeta('twitter:description', page.description)
+  syncStructuredData(normalizedPath, canonical)
 }
