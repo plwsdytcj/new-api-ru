@@ -44,11 +44,11 @@ export function ModelCoverage() {
             {t('Model catalog')}
           </p>
           <h2 className='mt-4 text-3xl leading-tight font-semibold tracking-normal md:text-4xl'>
-            {t('The complete catalog of American and Chinese AI models')}
+            {t('Leading AI models from around the world')}
           </h2>
           <p className='text-muted-foreground mt-5 text-base leading-7'>
             {t(
-              'From ChatGPT and Claude to Kimi and DeepSeek, RussiaAPI brings leading models from the US and China together in one API.'
+              'ChatGPT, Claude, Gemini, Kimi, DeepSeek, Qwen and more — RussiaAPI brings international and Chinese models together in one API.'
             )}
           </p>
         </AnimateInView>

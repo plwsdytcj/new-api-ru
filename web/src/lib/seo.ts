@@ -24,16 +24,16 @@ type SEOPage = {
 }
 
 const HOME_DESCRIPTION =
-  'ChatGPT, Claude, Kimi и DeepSeek через единый API в России. Полный каталог ведущих американских и китайских ИИ-моделей с автоматическим резервированием.'
+  'Все ведущие ИИ-модели через единый API в России: ChatGPT, Claude, Gemini, Kimi, DeepSeek, Qwen и другие. Международные и китайские модели с автоматическим резервированием.'
 
 const PUBLIC_PAGES: Record<string, SEOPage> = {
   '/': {
-    title: 'ChatGPT, Claude, Kimi и DeepSeek API в России | RussiaAPI',
+    title: 'Все ведущие ИИ-модели в одном API в России | RussiaAPI',
     description: HOME_DESCRIPTION,
     indexable: true,
   },
   '/pricing': {
-    title: 'Цены ChatGPT, Claude, Kimi и DeepSeek API — RussiaAPI',
+    title: 'Цены ведущих ИИ-моделей и API в России — RussiaAPI',
     description:
       'Цены ChatGPT, Claude, Kimi, DeepSeek и других американских и китайских ИИ-моделей. Сравнение стоимости токенов и оплата по фактическому использованию.',
     indexable: true,

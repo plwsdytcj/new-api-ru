@@ -104,7 +104,7 @@ export function Hero(props: HeroProps) {
               RussiaAPI
             </span>
             <span className='text-foreground/68 mt-2 block max-w-[54rem] text-[0.66em] leading-[1.1]'>
-              {t('ChatGPT, Claude, Kimi and DeepSeek in one API')}
+              {t('All leading AI models in one API')}
             </span>
           </h1>
 
@@ -113,7 +113,7 @@ export function Hero(props: HeroProps) {
             style={{ animationDelay: '100ms' }}
           >
             {t(
-              'Access leading American models such as ChatGPT and Claude, and Chinese models such as Kimi and DeepSeek. One API in Russia brings the full model catalog together with automatic routing and failover.'
+              'Access leading AI models from around the world, from ChatGPT and Claude to Kimi and DeepSeek, plus many more. One API in Russia brings the full catalog together with automatic routing and failover.'
             )}
           </p>
 
