@@ -29,7 +29,7 @@ func TestRenderSEOIndexForPublicPage(t *testing.T) {
 
 	for _, expected := range []string{
 		`<html lang="ru" data-seo-rendered="true">`,
-		`<title>Цены на GPT API в России и каталог моделей — RussiaAPI</title>`,
+		`<title>Цены API нейросетей для России | RussiaAPI</title>`,
 		`<link rel="canonical" href="https://example.com/pricing" />`,
 		`<meta name="robots" content="index, follow, max-image-preview:large" />`,
 		`<noscript id="seo-static-content"><main>`,
@@ -52,9 +52,10 @@ func TestRenderSEOIndexIncludesModelCoverage(t *testing.T) {
 	))
 
 	for _, expected := range []string{
-		`GPT API и ведущие ИИ-модели в России`,
-		`Американские ИИ-модели через единый API`,
-		`Китайские ИИ-модели: Kimi, DeepSeek и Qwen`,
+		`Все ведущие ИИ-модели. Один API для России.`,
+		`Инфраструктура, созданная для России`,
+		`Международные и китайские модели`,
+		`"areaServed"`,
 		`</main></noscript>`,
 	} {
 		if !strings.Contains(rendered, expected) {

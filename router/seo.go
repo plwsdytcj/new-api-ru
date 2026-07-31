@@ -25,35 +25,35 @@ type seoDetail struct {
 
 var publicSEOPages = map[string]seoPage{
 	"/": {
-		Title:       "GPT API в России — модели США и Китая | RussiaAPI",
-		Description: "OpenAI-совместимый GPT API для разработчиков в России. Единый интерфейс для американских и китайских ИИ-моделей, включая GPT, Kimi, DeepSeek и Qwen.",
-		Heading:     "GPT API и ведущие ИИ-модели в России",
-		Summary:     "Подключайте GPT и OpenAI-совместимые клиенты через российскую точку доступа. RussiaAPI объединяет маршрутизацию, резервирование, ключи и учёт расходов.",
+		Title:       "API нейросетей для России — все модели | RussiaAPI",
+		Description: "RussiaAPI — единый API нейросетей, созданный для разработчиков в России. ChatGPT, Claude, Gemini, DeepSeek, Kimi, Qwen и другие модели через российскую точку доступа.",
+		Heading:     "Все ведущие ИИ-модели. Один API для России.",
+		Summary:     "Единая точка доступа в России к ведущим международным и китайским ИИ-моделям: русский интерфейс и документация, автоматическая маршрутизация и единый баланс.",
 		Details: []seoDetail{
 			{
-				Heading: "Американские ИИ-модели через единый API",
-				Summary: "Используйте единый OpenAI-совместимый формат для GPT и интеграций с моделями американских поставщиков. Доступность конкретной модели и актуальная цена указаны в каталоге тарифов.",
+				Heading: "Инфраструктура, созданная для России",
+				Summary: "API-шлюз работает в российской облачной инфраструктуре. Интерфейс, документация, тарифы и поддержка доступны на русском языке.",
 			},
 			{
-				Heading: "Китайские ИИ-модели: Kimi, DeepSeek и Qwen",
-				Summary: "RussiaAPI развивает единый интерфейс для китайских моделей Kimi от Moonshot AI, DeepSeek и Qwen. Текущий список доступных моделей публикуется на странице тарифов.",
+				Heading: "Международные и китайские модели",
+				Summary: "ChatGPT, Claude, Gemini, DeepSeek, Kimi, Qwen и другие модели доступны через единый API. Текущий список и цены публикуются в каталоге тарифов.",
 			},
 		},
 	},
 	"/pricing": {
-		Title:       "Цены на GPT API в России и каталог моделей — RussiaAPI",
+		Title:       "Цены API нейросетей для России | RussiaAPI",
 		Description: "Актуальные цены GPT API в России и каталог американских и китайских ИИ-моделей. Сравнение стоимости токенов и оплата по фактическому использованию.",
 		Heading:     "Цены на модели",
 		Summary:     "Сравните стоимость входных и выходных токенов GPT и других доступных моделей. Каталог обновляется по мере подключения американских и китайских поставщиков.",
 	},
 	"/docs": {
-		Title:       "Документация RussiaAPI — подключение OpenAI API, Claude Code и Codex",
+		Title:       "Документация API нейросетей для России | RussiaAPI",
 		Description: "Русская документация RussiaAPI: получение API-ключа, OpenAI-совместимые запросы, настройка Claude Code, Codex и обработка ошибок.",
 		Heading:     "Документация RussiaAPI",
 		Summary:     "Инструкции по созданию API-ключа, замене Base URL, отправке первого запроса и подключению Claude Code, Codex и OpenAI SDK.",
 	},
 	"/about": {
-		Title:       "О RussiaAPI — инфраструктура доступа к ИИ-моделям",
+		Title:       "RussiaAPI — AI-инфраструктура для России",
 		Description: "RussiaAPI объединяет доступ к ведущим ИИ-моделям через совместимый API с маршрутизацией, резервированием и контролем расходов.",
 		Heading:     "О RussiaAPI",
 		Summary:     "RussiaAPI — инфраструктурный сервис для разработчиков и команд, которым нужен единый интерфейс доступа к нескольким поставщикам ИИ-моделей.",
@@ -317,6 +317,11 @@ func buildStructuredData(page seoPage, canonical string, publicURL string, reque
 			"applicationCategory": "DeveloperApplication",
 			"operatingSystem":     "Web",
 			"description":         page.Description,
+			"areaServed": map[string]string{
+				"@type": "Country",
+				"name":  "Russia",
+			},
+			"availableLanguage": []string{"ru", "en"},
 		})
 	} else {
 		graph = append(graph, map[string]any{
