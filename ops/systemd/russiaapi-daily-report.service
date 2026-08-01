@@ -1,0 +1,15 @@
+[Unit]
+Description=RussiaAPI daily operational report
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=russiaapi
+Group=russiaapi
+WorkingDirectory=/home/russiaapi/apps/ai-gateway-ru/deploy/new-api
+Environment=DEPLOY_DIR=/home/russiaapi/apps/ai-gateway-ru/deploy/new-api
+ExecStart=/home/russiaapi/apps/ai-gateway-ru/deploy/new-api/ops/daily-report.sh
+
+[Install]
+WantedBy=multi-user.target

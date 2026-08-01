@@ -1,0 +1,11 @@
+[Unit]
+Description=Send the RussiaAPI report at 09:00 Moscow time
+
+[Timer]
+OnCalendar=*-*-* 09:00:00 Europe/Moscow
+Persistent=true
+RandomizedDelaySec=30
+Unit=russiaapi-daily-report.service
+
+[Install]
+WantedBy=timers.target

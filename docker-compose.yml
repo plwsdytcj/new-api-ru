@@ -52,6 +52,7 @@ services:
 #      - UMAMI_WEBSITE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Umami 网站 ID (Umami Website ID)
 #      - UMAMI_SCRIPT_URL=https://analytics.umami.is/script.js  # Umami 脚本 URL，默认为官方地址 (Umami Script URL, defaults to official URL)
 #      - YANDEX_METRICA_ID=123456789  # Yandex Metrica counter ID
+#      - YANDEX_METRICA_TOKEN=  # Read-only OAuth token for the operational daily report
 
     depends_on:
       - redis
