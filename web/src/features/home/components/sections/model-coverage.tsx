@@ -17,31 +17,32 @@ export function ModelCoverage() {
 
   const groups = [
     {
-      code: 'US',
-      eyebrow: t('International models'),
-      title: t('Global providers'),
+      code: 'API',
+      eyebrow: t('Available now'),
+      title: t('Text models'),
       models: [
-        { name: 'ChatGPT', maker: 'OpenAI' },
-        { name: 'Claude', maker: 'Anthropic' },
-        { name: 'Gemini', maker: 'Google' },
-        { name: 'Grok', maker: 'xAI' },
+        { name: 'gpt-5.4', maker: 'Text' },
+        { name: 'gpt-5.4-mini', maker: 'Text' },
+        { name: 'gpt-5.5', maker: 'Text' },
+        { name: 'gpt-5.5-openai-compact', maker: 'Text' },
       ],
       description: t(
-        'Access leading American AI models through one OpenAI-compatible interface.'
+        'The live catalog is available through one OpenAI-compatible interface.'
       ),
     },
     {
-      code: 'CN',
-      eyebrow: t('Chinese models'),
-      title: t('Chinese providers'),
+      code: 'IMG',
+      eyebrow: t('Available now'),
+      title: t('Specialized models'),
       models: [
-        { name: 'DeepSeek', maker: 'DeepSeek' },
-        { name: 'Kimi', maker: 'Moonshot AI' },
-        { name: 'Qwen', maker: 'Alibaba Cloud' },
-        { name: 'GLM', maker: 'Zhipu AI' },
+        { name: 'gpt-5.6-luna', maker: 'Text' },
+        { name: 'gpt-5.6-sol', maker: 'Text' },
+        { name: 'gpt-5.6-terra', maker: 'Text' },
+        { name: 'gpt-image-2', maker: 'Image' },
+        { name: 'gpt-image-2-firefly', maker: 'Image' },
       ],
       description: t(
-        'Connect Chinese AI models through the same API format as they become available in the live catalog.'
+        'Additional global and Chinese providers will appear here only after their channels are live.'
       ),
     },
   ]
@@ -60,7 +61,7 @@ export function ModelCoverage() {
           </div>
           <p className='text-muted-foreground max-w-xl text-base leading-7'>
             {t(
-              'ChatGPT, Claude, Gemini, Kimi, DeepSeek, Qwen and more — RussiaAPI brings international and Chinese models together in one API.'
+              'Nine text and image models are live now. Additional global and Chinese providers are being connected.'
             )}
           </p>
         </AnimateInView>
@@ -143,7 +144,9 @@ function ModelGroup(props: { group: ModelGroupData; delay?: number }) {
             key={model.name}
             className={[
               'border-border/70 min-w-0 py-4',
-              index < 2 ? 'border-b' : '',
+              index < group.models.length - (group.models.length % 2 || 2)
+                ? 'border-b'
+                : '',
               index % 2 === 0 ? 'border-r pr-4' : 'pl-4',
             ].join(' ')}
           >

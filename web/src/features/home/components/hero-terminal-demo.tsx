@@ -125,11 +125,11 @@ export function HeroTerminalDemo(props: HeroTerminalDemoProps) {
             <span>base_url=https://russiaapi.com/v1</span>
           </div>
           <div className='flex flex-wrap items-center gap-2 text-xs text-white/55'>
-            <span>ChatGPT</span>
+            <span>gpt-5.4</span>
             <ArrowRight className='size-3' />
-            <span>Claude</span>
+            <span>gpt-5.5</span>
             <ArrowRight className='size-3' />
-            <span>DeepSeek</span>
+            <span>gpt-image-2</span>
             <ArrowRight className='size-3' />
             <span>+ {t('More models')}</span>
           </div>

@@ -40,8 +40,19 @@ export function Hero(props: HeroProps) {
   const primaryLabel = props.isAuthenticated
     ? t('Go to Dashboard')
     : t('Create API key')
-  const internationalModels = ['ChatGPT', 'Claude', 'Gemini', 'Grok']
-  const chineseModels = ['DeepSeek', 'Kimi', 'Qwen', 'GLM']
+  const textModels = [
+    'gpt-5.4',
+    'gpt-5.4-mini',
+    'gpt-5.5',
+    'gpt-5.5-openai-compact',
+    'gpt-5.6-luna',
+  ]
+  const specializedModels = [
+    'gpt-5.6-sol',
+    'gpt-5.6-terra',
+    'gpt-image-2',
+    'gpt-image-2-firefly',
+  ]
 
   return (
     <section className='dark:bg-background relative overflow-hidden border-b bg-[#fbfcfe] px-5 pt-24 pb-14 sm:px-6 md:pt-30 md:pb-20'>
@@ -159,8 +170,8 @@ export function Hero(props: HeroProps) {
           style={{ animationDelay: '210ms' }}
         >
           <ModelRail
-            label={t('International models')}
-            models={internationalModels}
+            label={t('Available text models')}
+            models={textModels}
           />
           <div className='border-border/70 relative flex min-h-20 items-center justify-center border-y px-7 lg:border-x lg:border-y-0'>
             <span className='absolute left-0 h-px w-full bg-[#e5484d]/25 lg:top-1/2' />
@@ -169,8 +180,8 @@ export function Hero(props: HeroProps) {
             </span>
           </div>
           <ModelRail
-            label={t('Chinese models')}
-            models={chineseModels}
+            label={t('Available image and variant models')}
+            models={specializedModels}
             align='right'
           />
         </div>
