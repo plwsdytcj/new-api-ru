@@ -24,11 +24,11 @@ type SEOPage = {
 }
 
 const HOME_DESCRIPTION =
-  'RussiaAPI — единый API нейросетей, созданный для разработчиков в России. ChatGPT, Claude, Gemini, DeepSeek, Kimi, Qwen и другие модели через российскую точку доступа.'
+  'RussiaAPI — ведущая глобальная AI API-платформа для России. Единый доступ к основным моделям из Китая, США и других стран через российскую инфраструктуру.'
 
 const PUBLIC_PAGES: Record<string, SEOPage> = {
   '/': {
-    title: 'API нейросетей для России — все модели | RussiaAPI',
+    title: 'Глобальная AI API-платформа для России | RussiaAPI',
     description: HOME_DESCRIPTION,
     indexable: true,
   },
@@ -45,9 +45,9 @@ const PUBLIC_PAGES: Record<string, SEOPage> = {
     indexable: true,
   },
   '/about': {
-    title: 'RussiaAPI — AI-инфраструктура для России',
+    title: 'RussiaAPI — ведущая глобальная AI API-платформа для России',
     description:
-      'RussiaAPI объединяет доступ к ведущим ИИ-моделям через совместимый API с маршрутизацией, резервированием и контролем расходов.',
+      'Единая платформа доступа к ведущим моделям из Китая, США и других стран: российская инфраструктура, маршрутизация, резервирование и контроль расходов.',
     indexable: true,
   },
   '/user-agreement': {
