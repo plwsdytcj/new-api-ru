@@ -188,8 +188,36 @@ metrica_pages=$(metrica_request \
   --data-urlencode 'sort=-ym:pv:pageviews' \
   --data-urlencode 'limit=3')
 
+metrica_organic=$(metrica_request \
+  --data-urlencode 'metrics=ym:s:visits,ym:s:users,ym:s:pageviews,ym:s:bounceRate' \
+  --data-urlencode "filters=ym:s:lastTrafficSource=='organic'")
+
+metrica_search_engines=$(metrica_request \
+  --data-urlencode 'metrics=ym:s:visits' \
+  --data-urlencode 'dimensions=ym:s:lastSearchEngineRoot' \
+  --data-urlencode "filters=ym:s:lastTrafficSource=='organic'" \
+  --data-urlencode 'sort=-ym:s:visits' \
+  --data-urlencode 'limit=5')
+
+metrica_organic_pages=$(metrica_request \
+  --data-urlencode 'metrics=ym:s:visits' \
+  --data-urlencode 'dimensions=ym:s:startURLPath' \
+  --data-urlencode "filters=ym:s:lastTrafficSource=='organic'" \
+  --data-urlencode 'sort=-ym:s:visits' \
+  --data-urlencode 'limit=5')
+
+read -r organic_visits organic_users organic_pageviews organic_bounce_rate < <(
+  jq -r '(.totals // [0,0,0,0]) | @tsv' <<<"$metrica_organic"
+)
+organic_visits=${organic_visits%.*}
+organic_users=${organic_users%.*}
+organic_pageviews=${organic_pageviews%.*}
+organic_bounce_rate=$(awk -v value="${organic_bounce_rate:-0}" 'BEGIN { printf "%.1f", value }')
+
 mapfile -t traffic_sources < <(jq -r '.data[]? | "\(.dimensions[0].name)\t\(.metrics[0] | floor)"' <<<"$metrica_sources")
 mapfile -t popular_pages < <(jq -r '.data[]? | "\(.dimensions[0].name)\t\(.metrics[0] | floor)"' <<<"$metrica_pages")
+mapfile -t search_engines < <(jq -r '.data[]? | "\(.dimensions[0].name)\t\(.metrics[0] | floor)"' <<<"$metrica_search_engines")
+mapfile -t organic_pages < <(jq -r '.data[]? | "\(.dimensions[0].name)\t\(.metrics[0] | floor)"' <<<"$metrica_organic_pages")
 
 format_ranked_lines() {
   local -n rows=$1
@@ -233,6 +261,8 @@ fi
 
 source_lines=$(format_ranked_lines traffic_sources '暂无数据' source)
 page_lines=$(format_ranked_lines popular_pages '暂无数据')
+search_engine_lines=$(format_ranked_lines search_engines '暂无自然搜索访问')
+organic_page_lines=$(format_ranked_lines organic_pages '暂无自然搜索访问')
 total_tokens=$(( ${metrics[prompt_tokens]:-0} + ${metrics[completion_tokens]:-0} ))
 
 REPORT=$(cat <<EOF
@@ -250,6 +280,19 @@ REPORT=$(cat <<EOF
 $source_lines
 热门页面
 $page_lines
+🔎 SEO / 自然搜索
+  自然搜索访问：${organic_visits:-0}
+  自然搜索访客：${organic_users:-0}
+  自然搜索浏览：${organic_pageviews:-0}
+  自然搜索跳出率：${organic_bounce_rate}%
+
+搜索引擎
+$search_engine_lines
+自然搜索落地页
+$organic_page_lines
+  注：关键词、曝光、平均排名、收录与抓取异常将在接入
+  Yandex Webmaster 和 Google Search Console 只读 API 后显示。
+
 ⚙️ New API
   新增用户：${metrics[users_new]:-0}（累计 ${metrics[users_total]:-0}）
   API 活跃用户：${metrics[active_api_users]:-0}

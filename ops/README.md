@@ -6,6 +6,12 @@
 Yandex Metrica traffic data and sends one report to the support Telegram chat.
 The default reporting timezone is `Europe/Moscow`.
 
+The SEO section currently includes organic visits, visitors, pageviews,
+bounce rate, search-engine distribution, and organic landing pages from
+Yandex Metrica. Search queries, impressions, average position, indexing, and
+crawl errors require separate read-only access to Yandex Webmaster and Google
+Search Console.
+
 Required settings in the deployment `.env`:
 
 ```dotenv
@@ -16,6 +22,9 @@ SUPPORT_TELEGRAM_CHAT_ID=
 OPS_RESEND_API_KEY=
 OPS_ALERT_EMAIL_FROM=
 OPS_ALERT_EMAIL_TO=
+# Reserved for the full search-performance report:
+YANDEX_WEBMASTER_TOKEN=
+GOOGLE_SEARCH_CONSOLE_CREDENTIALS_FILE=
 ```
 
 The report attempts Telegram first. If Telegram is unreachable from the server,
