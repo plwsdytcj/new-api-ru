@@ -17,13 +17,13 @@ Required settings in the deployment `.env`:
 ```dotenv
 YANDEX_METRICA_ID=111210946
 YANDEX_METRICA_TOKEN=
+YANDEX_WEBMASTER_TOKEN=
 SUPPORT_TELEGRAM_BOT_TOKEN=
 SUPPORT_TELEGRAM_CHAT_ID=
 OPS_RESEND_API_KEY=
 OPS_ALERT_EMAIL_FROM=
 OPS_ALERT_EMAIL_TO=
-# Reserved for the full search-performance report:
-YANDEX_WEBMASTER_TOKEN=
+# Reserved for Google search performance:
 GOOGLE_SEARCH_CONSOLE_CREDENTIALS_FILE=
 ```
 
