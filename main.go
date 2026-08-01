@@ -191,6 +191,10 @@ func main() {
 	middleware.SetUpLogger(server)
 	InjectUmamiAnalytics()
 	InjectGoogleAnalytics()
+	if err := InjectYandexMetricaAnalytics(); err != nil {
+		common.FatalLog("failed to configure Yandex Metrica: " + err.Error())
+		return
+	}
 	if err := InjectRuntimeBranding(); err != nil {
 		common.FatalLog("failed to configure public branding: " + err.Error())
 		return
@@ -282,6 +286,37 @@ func InjectGoogleAnalytics() {
 	analyticsInject := []byte(analyticsInjectBuilder.String())
 	placeholder := []byte("<!--Google Analytics-->\n")
 	indexPage = bytes.ReplaceAll(indexPage, placeholder, analyticsInject)
+}
+
+func InjectYandexMetricaAnalytics() error {
+	counterID := strings.TrimSpace(os.Getenv("YANDEX_METRICA_ID"))
+	headPlaceholder := []byte("<!--Yandex Metrica-->\n")
+	noscriptPlaceholder := []byte("<!--Yandex Metrica noscript-->\n")
+
+	if counterID == "" {
+		indexPage = bytes.ReplaceAll(indexPage, headPlaceholder, nil)
+		indexPage = bytes.ReplaceAll(indexPage, noscriptPlaceholder, nil)
+		return nil
+	}
+	if _, err := strconv.ParseUint(counterID, 10, 64); err != nil {
+		return fmt.Errorf("YANDEX_METRICA_ID must contain digits only")
+	}
+
+	head := `<script type="text/javascript">
+(function(m,e,t,r,i,k,a){
+    m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=` + counterID + `','ym');
+ym(` + counterID + `,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:'dataLayer',referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});
+</script>
+`
+	noscript := `<noscript><div><img src="https://mc.yandex.ru/watch/` + counterID + `" style="position:absolute;left:-9999px" alt="" /></div></noscript>
+`
+	indexPage = bytes.ReplaceAll(indexPage, headPlaceholder, []byte(head))
+	indexPage = bytes.ReplaceAll(indexPage, noscriptPlaceholder, []byte(noscript))
+	return nil
 }
 
 func InjectRuntimeBranding() error {
