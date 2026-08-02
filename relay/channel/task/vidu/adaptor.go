@@ -153,7 +153,11 @@ func (a *TaskAdaptor) BuildRequestURL(info *relaycommon.RelayInfo) (string, erro
 func (a *TaskAdaptor) BuildRequestHeader(c *gin.Context, req *http.Request, info *relaycommon.RelayInfo) error {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Token "+info.ApiKey)
+	scheme := "Token"
+	if taskcommon.Is302AIProxy(a.baseURL) {
+		scheme = "Bearer"
+	}
+	req.Header.Set("Authorization", scheme+" "+info.ApiKey)
 	return nil
 }
 
@@ -203,7 +207,11 @@ func (a *TaskAdaptor) FetchTask(baseUrl, key string, body map[string]any, proxy 
 	}
 
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", "Token "+key)
+	scheme := "Token"
+	if taskcommon.Is302AIProxy(baseUrl) {
+		scheme = "Bearer"
+	}
+	req.Header.Set("Authorization", scheme+" "+key)
 
 	client, err := service.GetHttpClientWithProxy(proxy)
 	if err != nil {

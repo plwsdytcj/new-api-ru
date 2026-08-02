@@ -123,6 +123,9 @@ func (a *TaskAdaptor) ValidateRequestAndSetAction(c *gin.Context, info *relaycom
 
 // BuildRequestURL constructs the upstream URL.
 func (a *TaskAdaptor) BuildRequestURL(_ *relaycommon.RelayInfo) (string, error) {
+	if taskcommon.Is302AIProxy(a.baseURL) {
+		return fmt.Sprintf("%s/doubao/doubao-seedance", a.baseURL), nil
+	}
 	return fmt.Sprintf("%s/api/v3/contents/generations/tasks", a.baseURL), nil
 }
 
@@ -245,6 +248,9 @@ func (a *TaskAdaptor) FetchTask(baseUrl, key string, body map[string]any, proxy 
 	}
 
 	uri := fmt.Sprintf("%s/api/v3/contents/generations/tasks/%s", baseUrl, taskID)
+	if taskcommon.Is302AIProxy(baseUrl) {
+		uri = fmt.Sprintf("%s/doubao/doubao-seedance/%s", baseUrl, taskID)
+	}
 
 	req, err := http.NewRequest(http.MethodGet, uri, nil)
 	if err != nil {

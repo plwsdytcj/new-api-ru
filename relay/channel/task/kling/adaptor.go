@@ -136,7 +136,7 @@ func (a *TaskAdaptor) ValidateRequestAndSetAction(c *gin.Context, info *relaycom
 func (a *TaskAdaptor) BuildRequestURL(info *relaycommon.RelayInfo) (string, error) {
 	path := lo.Ternary(info.Action == constant.TaskActionGenerate, "/v1/videos/image2video", "/v1/videos/text2video")
 
-	if isNewAPIRelay(info.ApiKey) {
+	if isNewAPIRelay(info.ApiKey) && !taskcommon.Is302AIProxy(a.baseURL) {
 		return fmt.Sprintf("%s/kling%s", a.baseURL, path), nil
 	}
 
@@ -226,7 +226,7 @@ func (a *TaskAdaptor) FetchTask(baseUrl, key string, body map[string]any, proxy 
 	}
 	path := lo.Ternary(action == constant.TaskActionGenerate, "/v1/videos/image2video", "/v1/videos/text2video")
 	url := fmt.Sprintf("%s%s/%s", baseUrl, path, taskID)
-	if isNewAPIRelay(key) {
+	if isNewAPIRelay(key) && !taskcommon.Is302AIProxy(baseUrl) {
 		url = fmt.Sprintf("%s/kling%s/%s", baseUrl, path, taskID)
 	}
 

@@ -3,6 +3,8 @@ package taskcommon
 import (
 	"encoding/base64"
 	"fmt"
+	"net/url"
+	"strings"
 
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/model"
@@ -10,6 +12,16 @@ import (
 	"github.com/QuantumNous/new-api/setting/system_setting"
 	"github.com/gin-gonic/gin"
 )
+
+// Is302AIProxy reports whether baseURL targets the 302.AI compatibility gateway.
+func Is302AIProxy(baseURL string) bool {
+	parsed, err := url.Parse(strings.TrimSpace(baseURL))
+	if err != nil {
+		return false
+	}
+	host := strings.ToLower(parsed.Hostname())
+	return host == "api.302.ai" || host == "api.302ai.cn"
+}
 
 // UnmarshalMetadata converts a map[string]any metadata to a typed struct via JSON round-trip.
 // This replaces the repeated pattern: json.Marshal(metadata) → json.Unmarshal(bytes, &target).
