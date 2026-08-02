@@ -40,6 +40,26 @@ func (a *TaskAdaptor) ValidateRequestAndSetAction(c *gin.Context, info *relaycom
 	return relaycommon.ValidateBasicTaskRequest(c, info, constant.TaskActionGenerate)
 }
 
+// EstimateBilling adjusts the six-second 768p base price for longer or 1080p jobs.
+func (a *TaskAdaptor) EstimateBilling(c *gin.Context, info *relaycommon.RelayInfo) map[string]float64 {
+	req, err := relaycommon.GetTaskRequest(c)
+	if err != nil {
+		return nil
+	}
+	ratio := 1.0
+	if taskcommon.DefaultInt(req.Duration, DefaultDuration) >= 10 {
+		ratio *= 2
+	}
+	config := GetModelConfig(info.UpstreamModelName)
+	if a.parseResolutionFromSize(req.Size, config) == Resolution1080P {
+		ratio *= 2
+	}
+	if ratio == 1 {
+		return nil
+	}
+	return map[string]float64{"hailuo_output": ratio}
+}
+
 func (a *TaskAdaptor) BuildRequestURL(info *relaycommon.RelayInfo) (string, error) {
 	return fmt.Sprintf("%s%s", a.baseURL, TextToVideoEndpoint), nil
 }

@@ -132,6 +132,25 @@ func (a *TaskAdaptor) ValidateRequestAndSetAction(c *gin.Context, info *relaycom
 	return relaycommon.ValidateBasicTaskRequest(c, info, constant.TaskActionGenerate)
 }
 
+// EstimateBilling uses the standard five-second job as the base price.
+func (a *TaskAdaptor) EstimateBilling(c *gin.Context, _ *relaycommon.RelayInfo) map[string]float64 {
+	req, err := relaycommon.GetTaskRequest(c)
+	if err != nil {
+		return nil
+	}
+	ratio := 1.0
+	if taskcommon.DefaultInt(req.Duration, 5) >= 10 {
+		ratio *= 2
+	}
+	if strings.EqualFold(taskcommon.DefaultString(req.Mode, "std"), "pro") {
+		ratio *= 3.5
+	}
+	if ratio == 1 {
+		return nil
+	}
+	return map[string]float64{"kling_output": ratio}
+}
+
 // BuildRequestURL constructs the upstream URL.
 func (a *TaskAdaptor) BuildRequestURL(info *relaycommon.RelayInfo) (string, error) {
 	path := lo.Ternary(info.Action == constant.TaskActionGenerate, "/v1/videos/image2video", "/v1/videos/text2video")

@@ -109,6 +109,23 @@ func (a *TaskAdaptor) ValidateRequestAndSetAction(c *gin.Context, info *relaycom
 	return nil
 }
 
+// EstimateBilling converts Vidu Q2 credits into a ratio over the one-second 360p base price.
+func (a *TaskAdaptor) EstimateBilling(c *gin.Context, _ *relaycommon.RelayInfo) map[string]float64 {
+	req, err := relaycommon.GetTaskRequest(c)
+	if err != nil {
+		return nil
+	}
+	duration := max(taskcommon.DefaultInt(req.Duration, 5), 1)
+	resolution := strings.ToLower(req.Size)
+	credits := 10 + 2*(duration-1)
+	if strings.Contains(resolution, "720") {
+		credits = 15 + 5*(duration-1)
+	} else if strings.Contains(resolution, "1080") || resolution == "" {
+		credits = 20 + 10*(duration-1)
+	}
+	return map[string]float64{"vidu_credits": float64(credits) / 10}
+}
+
 func (a *TaskAdaptor) BuildRequestBody(c *gin.Context, info *relaycommon.RelayInfo) (io.Reader, error) {
 	v, exists := c.Get("task_request")
 	if !exists {
