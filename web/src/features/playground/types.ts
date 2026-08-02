@@ -149,3 +149,33 @@ export interface GroupOption {
   ratio: number
   desc?: string
 }
+
+export interface VideoGenerationRequest {
+  model: string
+  group: string
+  prompt: string
+  images?: string[]
+  image?: string
+  duration: number
+  seconds?: string
+  size: string
+  mode?: string
+  metadata?: Record<string, unknown>
+}
+
+export interface VideoGenerationResponse {
+  id?: string
+  task_id?: string
+  status?: string
+  error?: { message?: string }
+}
+
+export interface VideoTask {
+  task_id: string
+  status: string
+  progress?: string
+  fail_reason?: string
+  result_url?: string
+  created_at?: number
+  updated_at?: number
+}

@@ -24,6 +24,9 @@ import type {
   ChatCompletionResponse,
   ModelOption,
   GroupOption,
+  VideoGenerationRequest,
+  VideoGenerationResponse,
+  VideoTask,
 } from './types'
 
 /**
@@ -79,4 +82,27 @@ export async function getUserGroups(): Promise<GroupOption[]> {
     ratio: info.ratio,
     desc: info.desc,
   }))
+}
+
+export async function createVideoGeneration(
+  payload: VideoGenerationRequest,
+  signal?: AbortSignal
+): Promise<VideoGenerationResponse> {
+  const res = await api.post(API_ENDPOINTS.VIDEO_GENERATIONS, payload, {
+    signal,
+    skipErrorHandler: true,
+  })
+  return res.data
+}
+
+export async function getVideoGeneration(
+  taskId: string,
+  signal?: AbortSignal
+): Promise<VideoTask> {
+  const res = await api.get(`${API_ENDPOINTS.VIDEO_GENERATIONS}/${taskId}`, {
+    signal,
+    disableDuplicate: true,
+    skipErrorHandler: true,
+  })
+  return res.data?.data ?? res.data
 }
